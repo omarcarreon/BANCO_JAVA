@@ -36,7 +36,7 @@ public class BANCO {
             
         }
                 */
-       new Captura_Proveedores().setVisible(true);
+       new Grupo_Alimenticio().setVisible(true);
        
     }    
 }
