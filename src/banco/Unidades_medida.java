@@ -5,6 +5,11 @@
  */
 package banco;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author omarcarreon
@@ -14,9 +19,60 @@ public class Unidades_medida extends javax.swing.JFrame {
     /**
      * Creates new form Unidades_medida
      */
+    int numcols;
+    List <List <String> > res = new ArrayList<>();
     public Unidades_medida() {
         initComponents();
+        Database db = new Database();
+        ResultSet resultset = null;
+        Statement stmt = null;
+                
+        if (db.connect()) {
+            final Connection conn = db.getConnection();
+            try {
+                stmt = conn.createStatement();
+                resultset = stmt.executeQuery("select * from Unidad");
+                    
+                numcols = resultset.getMetaData().getColumnCount();
+                
+
+                while (resultset.next()) {
+                    List <String> row = new ArrayList<>(numcols); 
+
+                    for (int i=1; i<= numcols; i++) {  // don't skip the last column, use <=
+                        row.add(resultset.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res.add(row); // add it to the result
+                    //System.out.print("\n");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Unidades_medida.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (resultset != null){
+                    try {
+                        resultset.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Unidades_medida.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Unidades_medida.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+  
+        }
+        for (int i=0; i< res.size(); i++) {  
+            jComboBox1.addItem(res.get(i).get(1));
+        }
+        jComboBox1.setSelectedIndex(-1);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +99,16 @@ public class Unidades_medida extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeVisible(evt);
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel1.setText("Descripción");
 
@@ -85,14 +150,11 @@ public class Unidades_medida extends javax.swing.JFrame {
 
         jLabel4.setText("Unidades");
 
-        jTextField1.setText("Botella");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
-
-        jTextField2.setText("Botella");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,6 +248,17 @@ public class Unidades_medida extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        int selectedindex = jComboBox1.getSelectedIndex();
+        jTextField1.setText(res.get(selectedindex).get(0));
+        jTextField2.setText(jComboBox1.getSelectedItem().toString());
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
+
+    private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
 
     /**
      * @param args the command line arguments
