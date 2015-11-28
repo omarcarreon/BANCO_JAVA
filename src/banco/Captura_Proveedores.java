@@ -5,11 +5,13 @@
  */
 package banco;
 
+import java.awt.HeadlessException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,8 +24,13 @@ public class Captura_Proveedores extends javax.swing.JFrame {
      */
     int numcols;
     List <List <String> > res = new ArrayList<>();
+    int editar = 0;
     public Captura_Proveedores() {
         initComponents();
+        getProveedores();
+    }
+    
+    private void getProveedores() {
         Database db = new Database();
         ResultSet resultset = null;
         Statement stmt = null;
@@ -77,6 +84,18 @@ public class Captura_Proveedores extends javax.swing.JFrame {
             jComboBox1.addItem(res.get(i).get(1));
         }
         jComboBox1.setSelectedIndex(-1);
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
+        jTextField5.setEditable(false);
+        jTextField6.setEditable(false);
+        jTextField7.setEditable(false);
+        jTextField8.setEditable(false);
+        jTextField9.setEditable(false);
+        jTextField10.setEditable(false);
+        jTextField11.setEditable(false);
+        jTextField12.setEditable(false);
     }
 
     /**
@@ -123,7 +142,8 @@ public class Captura_Proveedores extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Captura Proveedores");
 
         jButton1.setText("Nuevo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -133,14 +153,39 @@ public class Captura_Proveedores extends javax.swing.JFrame {
         });
 
         jButton2.setText("Editar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Borrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Grabar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Cancelar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Salir");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -179,6 +224,8 @@ public class Captura_Proveedores extends javax.swing.JFrame {
                 jTextField6ActionPerformed(evt);
             }
         });
+
+        jTextField11.setText("dd/mm/aaaa");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,7 +291,7 @@ public class Captura_Proveedores extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -391,6 +438,32 @@ public class Captura_Proveedores extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField11.setText("");
+        jTextField12.setText("");
+        
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        jTextField3.setEditable(true);
+        jTextField4.setEditable(true);
+        jTextField5.setEditable(true);
+        jTextField6.setEditable(true);
+        jTextField7.setEditable(true);
+        jTextField8.setEditable(true);
+        jTextField9.setEditable(true);
+        jTextField10.setEditable(true);
+        jTextField11.setEditable(true);
+        jTextField12.setEditable(true);
+        editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -423,6 +496,188 @@ public class Captura_Proveedores extends javax.swing.JFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+          // create the mysql database connection
+          String myDriver = "com.mysql.jdbc.Driver";
+          String myUrl = "jdbc:mysql://localhost:3306/Banco";
+          Class.forName(myDriver);
+          int selectedindex;
+            try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                selectedindex = jComboBox1.getSelectedIndex();
+                String idproveedor = res.get(selectedindex).get(0);
+                String query = "delete from Proveedores where idProveedor = ?";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, idproveedor);
+                // execute the preparedstatement
+                preparedStmt.execute();
+            }
+            JOptionPane.showMessageDialog(null, "Borrado.");
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField6.setText("");
+            jTextField7.setText("");
+            jTextField8.setText("");
+            jTextField9.setText("");
+            jTextField10.setText("");
+            jTextField11.setText("");
+            jTextField12.setText("");
+            jTextField1.setEditable(false);
+            jTextField2.setEditable(false);
+            jTextField3.setEditable(false);
+            jTextField4.setEditable(false);
+            jTextField5.setEditable(false);
+            jTextField6.setEditable(false);
+            jTextField7.setEditable(false);
+            jTextField8.setEditable(false);
+            jTextField9.setEditable(false);
+            jTextField10.setEditable(false);
+            jTextField11.setEditable(false);
+            jTextField12.setEditable(false);
+            jComboBox1.setSelectedIndex(-1);
+            jComboBox1.removeItemAt(selectedindex);
+            editar = 0;
+        }
+        catch (ClassNotFoundException | SQLException | HeadlessException e)
+        {
+          System.err.println("Got an exception! ");
+          System.err.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        jTextField3.setEditable(true);
+        jTextField4.setEditable(true);
+        jTextField5.setEditable(true);
+        jTextField6.setEditable(true);
+        jTextField7.setEditable(true);
+        jTextField8.setEditable(true);
+        jTextField9.setEditable(true);
+        jTextField10.setEditable(true);
+        jTextField11.setEditable(true);
+        jTextField12.setEditable(true);
+        editar = 1;
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int selectedindex = jComboBox1.getSelectedIndex();
+        if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
+            Connection con=null;
+            PreparedStatement s;
+            String url="jdbc:mysql://localhost:3306/Banco";
+            String dbDriver = "com.mysql.jdbc.Driver";
+            String user="root";
+            String pass="";
+            try{
+                    Class.forName(dbDriver);
+                    con=(Connection) DriverManager.getConnection(url,user,pass);
+                    s=con.prepareStatement("insert into Proveedores values(?,?,?,?,?,?,?,?,?,?,?,?)");
+                    s.setString(1,jTextField1.getText());
+                    s.setString(2,jTextField2.getText());
+                    s.setString(3,jTextField3.getText());
+                    s.setString(4,jTextField5.getText());
+                    s.setString(5,jTextField4.getText());
+                    s.setString(6,jTextField6.getText());
+                    s.setString(7,jTextField7.getText());
+                    s.setString(8,jTextField9.getText());
+                    s.setString(9,jTextField10.getText());
+                    s.setString(10,jTextField8.getText());
+                    s.setString(11,jTextField11.getText());
+                    s.setString(12,jTextField12.getText());
+                    
+
+                    s.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Guardado.");
+                    editar = 0;
+                    this.dispose();
+            }
+            catch (SQLException | ClassNotFoundException e) {
+                System.out.println(e);
+                  }
+        } else if (editar == 1){
+            try
+            {
+              // create the mysql database connection
+              String myDriver = "com.mysql.jdbc.Driver";
+              String myUrl = "jdbc:mysql://localhost:3306/Banco";
+              Class.forName(myDriver);
+                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                    String idproveedor = res.get(selectedindex).get(0);
+                    String query = "update Proveedores set idProveedor = ? , Proveedor = ? , Direccion = ? , Colonia = ? , Ciudad = ? , Estado = ? , Telefono = ? , Fax = ? , Contacto = ? , Rfc = ? , FechaAlta = ?, Mail = ? where idProveedor = ?";
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString(1,jTextField1.getText());
+                    preparedStmt.setString(2,jTextField2.getText());
+                    preparedStmt.setString(3,jTextField3.getText());
+                    preparedStmt.setString(4,jTextField5.getText());
+                    preparedStmt.setString(5,jTextField4.getText());
+                    preparedStmt.setString(6,jTextField6.getText());
+                    preparedStmt.setString(7,jTextField7.getText());
+                    preparedStmt.setString(8,jTextField9.getText());
+                    preparedStmt.setString(9,jTextField10.getText());
+                    preparedStmt.setString(10,jTextField8.getText());
+                    preparedStmt.setString(11,jTextField11.getText());
+                    preparedStmt.setString(12,jTextField12.getText());
+                    preparedStmt.setString(13,idproveedor);
+                    
+                    // execute the preparedstatement
+                    preparedStmt.execute();
+                }
+              JOptionPane.showMessageDialog(null, "Editado.");
+              editar = 0;
+              this.dispose();
+
+            }
+            catch (ClassNotFoundException | SQLException | HeadlessException e)
+            {
+              System.err.println("Got an exception! ");
+              System.err.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField11.setText("");
+        jTextField12.setText("");
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
+        jTextField5.setEditable(false);
+        jTextField6.setEditable(false);
+        jTextField7.setEditable(false);
+        jTextField8.setEditable(false);
+        jTextField9.setEditable(false);
+        jTextField10.setEditable(false);
+        jTextField11.setEditable(false);
+        jTextField12.setEditable(false);
+        editar = 0;
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,11 +6,13 @@
 
 package banco;
 
+import java.awt.HeadlessException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author diegoaleman
@@ -22,8 +24,12 @@ public class Grupo_Referencia extends javax.swing.JFrame {
      */
     int numcols;
     List <List <String> > res = new ArrayList<>();
+    int editar = 0;
     public Grupo_Referencia() {
         initComponents();
+        getGrupoReferencia();
+    }
+    private void getGrupoReferencia() {
         Database db = new Database();
         ResultSet resultset = null;
         Statement stmt = null;
@@ -70,8 +76,9 @@ public class Grupo_Referencia extends javax.swing.JFrame {
             jComboBox1.addItem(res.get(i).get(1));
         }
         jComboBox1.setSelectedIndex(-1);
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,16 +93,16 @@ public class Grupo_Referencia extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Grupo Referencia");
 
         jLabel1.setText("Descripción");
 
@@ -120,11 +127,12 @@ public class Grupo_Referencia extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
         jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Borrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +149,11 @@ public class Grupo_Referencia extends javax.swing.JFrame {
         });
 
         jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Editar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -170,9 +183,9 @@ public class Grupo_Referencia extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jTextField1)))
+                            .addComponent(jComboBox1, 0, 244, Short.MAX_VALUE)
+                            .addComponent(jTextField1)
+                            .addComponent(jTextField2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,10 +213,10 @@ public class Grupo_Referencia extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
@@ -219,18 +232,107 @@ public class Grupo_Referencia extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        try
+        {
+          // create the mysql database connection
+          String myDriver = "com.mysql.jdbc.Driver";
+          String myUrl = "jdbc:mysql://localhost:3306/Banco";
+          Class.forName(myDriver);
+          int selectedindex;
+            try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                selectedindex = jComboBox1.getSelectedIndex();
+                String idgruporef = res.get(selectedindex).get(0);
+                String query = "delete from GrupoRef where idGrupoRef = ?";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, idgruporef);
+                // execute the preparedstatement
+                preparedStmt.execute();
+            }
+          JOptionPane.showMessageDialog(null, "Borrado.");
+          jTextField1.setText("");
+          jTextField2.setText("");
+          jTextField1.setEditable(false);
+          jTextField2.setEditable(false);
+          jComboBox1.setSelectedIndex(-1);
+          jComboBox1.removeItemAt(selectedindex);
+          editar = 0;
+
+
+        }
+        catch (ClassNotFoundException | SQLException | HeadlessException e)
+        {
+          System.err.println("Got an exception! ");
+          System.err.println(e.getMessage());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        int selectedindex = jComboBox1.getSelectedIndex();
+        if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
+            Connection con=null;
+            PreparedStatement s;
+            String url="jdbc:mysql://localhost:3306/Banco";
+            String dbDriver = "com.mysql.jdbc.Driver";
+            String user="root";
+            String pass="";
+            try{
+                    Class.forName(dbDriver);
+                    con=(Connection) DriverManager.getConnection(url,user,pass);
+                    s=con.prepareStatement("insert into GrupoRef values(?,?)");
+                    s.setString(1,jTextField1.getText());
+                    s.setString(2,jTextField2.getText());
+                    
+
+                    s.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Guardado.");
+                    editar = 0;
+                    this.dispose();
+            }
+            catch (SQLException | ClassNotFoundException e) {
+                System.out.println(e);
+                  }
+        } else if (editar == 1){
+            try
+            {
+              // create the mysql database connection
+              String myDriver = "com.mysql.jdbc.Driver";
+              String myUrl = "jdbc:mysql://localhost:3306/Banco";
+              Class.forName(myDriver);
+                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                    String idgruporef = res.get(selectedindex).get(0);
+                    String query = "update GrupoRef set idGrupoRef = ? , GrupoRef = ? where idGrupoRef = ?";
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString(1, jTextField1.getText());
+                    preparedStmt.setString(2, jTextField2.getText());
+                    preparedStmt.setString(3, idgruporef);
+                    
+                    // execute the preparedstatement
+                    preparedStmt.execute();
+                }
+              JOptionPane.showMessageDialog(null, "Editado.");
+              editar = 0;
+              this.dispose();
+
+            }
+            catch (ClassNotFoundException | SQLException | HeadlessException e)
+            {
+              System.err.println("Got an exception! ");
+              System.err.println(e.getMessage());
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        editar = 1;
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -241,12 +343,30 @@ public class Grupo_Referencia extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
         jTextField1.setText(res.get(selectedindex).get(0));
-        jTextArea1.setText(jComboBox1.getSelectedItem().toString());
+        jTextField2.setText(jComboBox1.getSelectedItem().toString());
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        editar = 0;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        editar = 0;
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,8 +414,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

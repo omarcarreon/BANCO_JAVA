@@ -6,6 +6,16 @@
 
 package banco;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.*;
+
 /**
  *
  * @author diegoaleman
@@ -15,10 +25,175 @@ public class AccesoUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form AccesoUsuarios
      */
+    int numcols;
+    List <List <String> > res = new ArrayList<>();
+    int editar = 0;
     public AccesoUsuarios() {
         initComponents();
+        getNivelesAcceso();
     }
+    private void getNivelesAcceso() {
+        Database db = new Database();
+        ResultSet resultset = null;
+        Statement stmt = null;
+                
+        if (db.connect()) {
+            final Connection conn = db.getConnection();
+            try {
+                stmt = conn.createStatement();
+                resultset = stmt.executeQuery("select * from Nivel_Acceso");
+                    
+                numcols = resultset.getMetaData().getColumnCount();
+                
 
+                while (resultset.next()) {
+                    List <String> row = new ArrayList<>(numcols); 
+
+                    for (int i=1; i<= numcols; i++) {  // don't skip the last column, use <=
+                        row.add(resultset.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res.add(row); // add it to the result
+                    //System.out.print("\n");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Nivel_Acceso.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (resultset != null){
+                    try {
+                        resultset.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Nivel_Acceso.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Nivel_Acceso.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+  
+        }
+        for (int i=0; i< res.size(); i++) {  
+            jComboBox2.addItem(res.get(i).get(1));
+        }
+        jComboBox2.setSelectedIndex(-1);
+        
+    }
+    
+    private void getFormularios() {
+        Database db = new Database();
+        ResultSet resultset2 = null;
+        Statement stmt2 = null;
+        List <List <String> > res2 = new ArrayList<>();
+
+        int numcols2 = 0;       
+        if (db.connect()) {
+            final Connection conn = db.getConnection();
+            try {
+                stmt2 = conn.createStatement();
+                resultset2 = stmt2.executeQuery("select * from Formularios");
+                    
+                numcols2 = resultset2.getMetaData().getColumnCount();
+
+                while (resultset2.next()) {
+                    List <String> row = new ArrayList<>(numcols2); 
+
+                    for (int i=1; i<= numcols2; i++) {  // don't skip the last column, use <=
+                        row.add(resultset2.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res2.add(row); // add it to the result
+                    //System.out.print("\n");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (resultset2 != null){
+                    try {
+                        resultset2.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (stmt2 != null){
+                    try {
+                        stmt2.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+  
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        for (int i=0; i< res2.size(); i++) { 
+            String id = res2.get(i).get(0);
+            String n = res2.get(i).get(1);
+            
+            model.insertRow(jTable1.getRowCount(), new Object[] {id,n});
+        }
+    }
+    private void getMenus() {
+        Database db = new Database();
+        ResultSet resultset2 = null;
+        Statement stmt2 = null;
+        List <List <String> > res2 = new ArrayList<>();
+
+        int numcols2 = 0;       
+        if (db.connect()) {
+            final Connection conn = db.getConnection();
+            try {
+                stmt2 = conn.createStatement();
+                resultset2 = stmt2.executeQuery("select * from Menus");
+                    
+                numcols2 = resultset2.getMetaData().getColumnCount();
+
+                while (resultset2.next()) {
+                    List <String> row = new ArrayList<>(numcols2); 
+
+                    for (int i=1; i<= numcols2; i++) {  // don't skip the last column, use <=
+                        row.add(resultset2.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res2.add(row); // add it to the result
+                    //System.out.print("\n");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (resultset2 != null){
+                    try {
+                        resultset2.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (stmt2 != null){
+                    try {
+                        stmt2.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+  
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        for (int i=0; i< res2.size(); i++) { 
+            String id = res2.get(i).get(0);
+            String n = res2.get(i).get(1);
+            
+            model.insertRow(jTable1.getRowCount(), new Object[] {id,n});
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +212,7 @@ public class AccesoUsuarios extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Acceso a Usuarios");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -58,9 +233,31 @@ public class AccesoUsuarios extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Formularios", "Menús" }));
+        jComboBox1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox2PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Acceso");
 
@@ -69,6 +266,11 @@ public class AccesoUsuarios extends javax.swing.JFrame {
         jButton1.setText("Grabar");
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,6 +319,45 @@ public class AccesoUsuarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox2PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox2PopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2PopupMenuWillBecomeInvisible
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        JTableHeader th = jTable1.getTableHeader();
+        if (jComboBox1.getSelectedIndex() == 1) {
+            TableColumnModel tcm = th.getColumnModel();
+            TableColumn tc1 = tcm.getColumn(0);
+            TableColumn tc2 = tcm.getColumn(1);
+            tc1.setHeaderValue( "ID Formulario" );
+            tc2.setHeaderValue( "Formulario" );
+            th.repaint();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            getFormularios();
+        } else if (jComboBox1.getSelectedIndex() == 2) {
+            TableColumnModel tcm = th.getColumnModel();
+            TableColumn tc1 = tcm.getColumn(0);
+            TableColumn tc2 = tcm.getColumn(1);
+            tc1.setHeaderValue( "ID Menú" );
+            tc2.setHeaderValue( "Menú" );
+            th.repaint();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            getMenus();
+        }
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments

@@ -5,11 +5,13 @@
  */
 package banco;
 
+import java.awt.HeadlessException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author omarcarreon
@@ -21,8 +23,13 @@ public class Unidades_medida extends javax.swing.JFrame {
      */
     int numcols;
     List <List <String> > res = new ArrayList<>();
+    int editar = 0;
+
     public Unidades_medida() {
         initComponents();
+        getUnidades();
+    }
+    private void getUnidades() {
         Database db = new Database();
         ResultSet resultset = null;
         Statement stmt = null;
@@ -71,6 +78,8 @@ public class Unidades_medida extends javax.swing.JFrame {
             jComboBox1.addItem(res.get(i).get(1));
         }
         jComboBox1.setSelectedIndex(-1);
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
     }
     
 
@@ -97,7 +106,8 @@ public class Unidades_medida extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Unidades de Medida");
 
         jComboBox1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
@@ -113,6 +123,11 @@ public class Unidades_medida extends javax.swing.JFrame {
         jLabel1.setText("Descripción");
 
         jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Borrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +144,11 @@ public class Unidades_medida extends javax.swing.JFrame {
         });
 
         jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Editar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -231,18 +251,107 @@ public class Unidades_medida extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        editar = 1;
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        try
+        {
+          // create the mysql database connection
+          String myDriver = "com.mysql.jdbc.Driver";
+          String myUrl = "jdbc:mysql://localhost:3306/Banco";
+          Class.forName(myDriver);
+          int selectedindex;
+            try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                selectedindex = jComboBox1.getSelectedIndex();
+                String idunidad = res.get(selectedindex).get(0);
+                String query = "delete from Unidad where idUnidad = ?";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, idunidad);
+                // execute the preparedstatement
+                preparedStmt.execute();
+            }
+          JOptionPane.showMessageDialog(null, "Borrado.");
+          jTextField1.setText("");
+          jTextField2.setText("");
+          jTextField1.setEditable(false);
+          jTextField2.setEditable(false);
+          jComboBox1.setSelectedIndex(-1);
+          jComboBox1.removeItemAt(selectedindex);
+          editar = 0;
+
+
+        }
+        catch (ClassNotFoundException | SQLException | HeadlessException e)
+        {
+          System.err.println("Got an exception! ");
+          System.err.println(e.getMessage());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        int selectedindex = jComboBox1.getSelectedIndex();
+        if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
+            Connection con=null;
+            PreparedStatement s;
+            String url="jdbc:mysql://localhost:3306/Banco";
+            String dbDriver = "com.mysql.jdbc.Driver";
+            String user="root";
+            String pass="";
+            try{
+                    Class.forName(dbDriver);
+                    con=(Connection) DriverManager.getConnection(url,user,pass);
+                    s=con.prepareStatement("insert into Unidad values(?,?)");
+                    s.setString(1,jTextField1.getText());
+                    s.setString(2,jTextField2.getText());
+                    
+
+                    s.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Guardado.");
+                    editar = 0;
+                    this.dispose();
+            }
+            catch (SQLException | ClassNotFoundException e) {
+                System.out.println(e);
+                  }
+        } else if (editar == 1){
+            try
+            {
+              // create the mysql database connection
+              String myDriver = "com.mysql.jdbc.Driver";
+              String myUrl = "jdbc:mysql://localhost:3306/Banco";
+              Class.forName(myDriver);
+                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                    String idunidad = res.get(selectedindex).get(0);
+                    String query = "update Unidad set idUnidad = ? , Unidad = ? where idUnidad = ?";
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString(1, jTextField1.getText());
+                    preparedStmt.setString(2, jTextField2.getText());
+                    preparedStmt.setString(3, idunidad);
+                    
+                    // execute the preparedstatement
+                    preparedStmt.execute();
+                }
+              JOptionPane.showMessageDialog(null, "Editado.");
+              editar = 0;
+              this.dispose();
+
+            }
+            catch (ClassNotFoundException | SQLException | HeadlessException e)
+            {
+              System.err.println("Got an exception! ");
+              System.err.println(e.getMessage());
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -259,6 +368,24 @@ public class Unidades_medida extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        editar = 0;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        editar = 0;
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -64,6 +64,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem13.setText("jMenuItem13");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú");
 
         jMenu2.setText("Catálogos");
 

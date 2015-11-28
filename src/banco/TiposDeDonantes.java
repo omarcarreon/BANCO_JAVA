@@ -1,8 +1,12 @@
 package banco;
 
-import static java.awt.SystemColor.window;
-import java.awt.Window;
-
+import java.awt.HeadlessException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,13 +17,70 @@ import java.awt.Window;
  *
  * @author angelgonzalez
  */
-public class TiposDeDonantes extends javax.swing.JFrame {
+public final class TiposDeDonantes extends javax.swing.JFrame {
 
     /**
      * Creates new form TiposDeDonantes
      */
+        int numcols;
+    List <List <String> > res = new ArrayList<>();
+    int editar = 0;
     public TiposDeDonantes() {
         initComponents();
+        getTiposDonantes();
+    }
+    
+    public void getTiposDonantes() {
+        Database db = new Database();
+        ResultSet resultset = null;
+        Statement stmt = null;
+                
+        if (db.connect()) {
+            final Connection conn = db.getConnection();
+            try {
+                stmt = conn.createStatement();
+                resultset = stmt.executeQuery("select * from TipoDon");
+                    
+                numcols = resultset.getMetaData().getColumnCount();
+                
+
+                while (resultset.next()) {
+                    List <String> row = new ArrayList<>(numcols); 
+
+                    for (int i=1; i<= numcols; i++) {  // don't skip the last column, use <=
+                        row.add(resultset.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res.add(row); // add it to the result
+                    //System.out.print("\n");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(TiposDeDonantes.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (resultset != null){
+                    try {
+                        resultset.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TiposDeDonantes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TiposDeDonantes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+  
+        }
+        for (int i=0; i< res.size(); i++) {  
+            jComboBox1.addItem(res.get(i).get(1));
+        }
+        jComboBox1.setSelectedIndex(-1);
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
     }
 
     /**
@@ -46,7 +107,8 @@ public class TiposDeDonantes extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tipos de Donantes");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setToolTipText("");
@@ -54,7 +116,16 @@ public class TiposDeDonantes extends javax.swing.JFrame {
 
         jLabel1.setText("Descripción:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeVisible(evt);
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -94,30 +165,29 @@ public class TiposDeDonantes extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                    .addComponent(jTextField1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jButton1.setText("Nuevo");
@@ -128,10 +198,25 @@ public class TiposDeDonantes extends javax.swing.JFrame {
         });
 
         jButton2.setText("Grabar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Editar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Borrar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Salir");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +226,11 @@ public class TiposDeDonantes extends javax.swing.JFrame {
         });
 
         jButton6.setText("Cancelar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,7 +272,7 @@ public class TiposDeDonantes extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton4)
                     .addComponent(jButton3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -196,12 +286,137 @@ public class TiposDeDonantes extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        int selectedindex = jComboBox1.getSelectedIndex();
+        jTextField1.setText(res.get(selectedindex).get(0));
+        jTextField2.setText(jComboBox1.getSelectedItem().toString());
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
+
+    private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        editar = 1;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+          // create the mysql database connection
+          String myDriver = "com.mysql.jdbc.Driver";
+          String myUrl = "jdbc:mysql://localhost:3306/Banco";
+          Class.forName(myDriver);
+          int selectedindex;
+            try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                selectedindex = jComboBox1.getSelectedIndex();
+                String idtipodon = res.get(selectedindex).get(0);
+                String query = "delete from TipoDon where idTipoDon = ?";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, idtipodon);
+                // execute the preparedstatement
+                preparedStmt.execute();
+            }
+          JOptionPane.showMessageDialog(null, "Borrado.");
+          jTextField1.setText("");
+          jTextField2.setText("");
+          jTextField1.setEditable(false);
+          jTextField2.setEditable(false);
+          jComboBox1.setSelectedIndex(-1);
+          jComboBox1.removeItemAt(selectedindex);
+          editar = 0;
+
+
+        }
+        catch (ClassNotFoundException | SQLException | HeadlessException e)
+        {
+          System.err.println("Got an exception! ");
+          System.err.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int selectedindex = jComboBox1.getSelectedIndex();
+        if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
+            Connection con=null;
+            PreparedStatement s;
+            String url="jdbc:mysql://localhost:3306/Banco";
+            String dbDriver = "com.mysql.jdbc.Driver";
+            String user="root";
+            String pass="";
+            try{
+                    Class.forName(dbDriver);
+                    con=(Connection) DriverManager.getConnection(url,user,pass);
+                    s=con.prepareStatement("insert into TipoDon values(?,?)");
+                    s.setString(1,jTextField1.getText());
+                    s.setString(2,jTextField2.getText());
+                    
+
+                    s.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Guardado.");
+                    editar = 0;
+                    this.dispose();
+            }
+            catch (SQLException | ClassNotFoundException e) {
+                System.out.println("aqui" +e);
+                  }
+        } else if (editar == 1){
+            try
+            {
+              // create the mysql database connection
+              String myDriver = "com.mysql.jdbc.Driver";
+              String myUrl = "jdbc:mysql://localhost:3306/Banco";
+              Class.forName(myDriver);
+                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                    String idnivel = res.get(selectedindex).get(0);
+                    String query = "update TipoDon set idTipoDon = ? , TipoDon = ? where idTipoDon = ?";
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString(1, jTextField1.getText());
+                    preparedStmt.setString(2, jTextField2.getText());
+                    preparedStmt.setString(3, idnivel);
+                    
+                    // execute the preparedstatement
+                    preparedStmt.execute();
+                }
+              JOptionPane.showMessageDialog(null, "Editado.");
+              editar = 0;
+              this.dispose();
+
+            }
+            catch (ClassNotFoundException | SQLException | HeadlessException e)
+            {
+              System.err.println("Got an exception! ");
+              System.err.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        editar = 0;
+    }//GEN-LAST:event_jButton6ActionPerformed
     
     /**
      * @param args the command line arguments
