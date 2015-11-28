@@ -9,13 +9,72 @@ package banco;
  *
  * @author jorgelp94
  */
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 public class Formularios extends javax.swing.JFrame {
 
     /**
      * Creates new form Formularios
      */
+    int numcols;
+    List <List <String> > res = new ArrayList<>();
     public Formularios() {
         initComponents();
+        Database db = new Database();
+        ResultSet resultset = null;
+        Statement stmt = null;
+                
+        if (db.connect()) {
+            final Connection conn = db.getConnection();
+            try {
+                stmt = conn.createStatement();
+                resultset = stmt.executeQuery("select * from Formularios");
+                    
+                numcols = resultset.getMetaData().getColumnCount();
+
+                while (resultset.next()) {
+                    List <String> row = new ArrayList<>(numcols); 
+
+                    for (int i=1; i<= numcols; i++) {  // don't skip the last column, use <=
+                        row.add(resultset.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res.add(row); // add it to the result
+                    //System.out.print("\n");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (resultset != null){
+                    try {
+                        resultset.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Formularios.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+  
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        for (int i=0; i< res.size(); i++) { 
+            String n = res.get(i).get(1);
+            model.insertRow(jTable1.getRowCount(), new Object[] {n});
+        }
+        jComboBox1.setSelectedIndex(-1);
     }
 
     /**
@@ -36,12 +95,7 @@ public class Formularios extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Formulario", "Permitido"
@@ -66,34 +120,31 @@ public class Formularios extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addGap(86, 86, 86)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(357, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();

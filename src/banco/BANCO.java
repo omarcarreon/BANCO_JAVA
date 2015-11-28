@@ -36,7 +36,7 @@ public class BANCO {
             
         }
                 */
-       new Grupo_Alimenticio().setVisible(true);
+       new Formularios().setVisible(true);
        
     }    
 }

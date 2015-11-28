@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package banco;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,8 +19,74 @@ public class Donantes extends javax.swing.JFrame {
     /**
      * Creates new form Donantes
      */
+    int numcols;
+    List <List <String> > res = new ArrayList<>();
+    List <List <String> > res2 = new ArrayList<>();
     public Donantes() {
         initComponents();
+        Database db = new Database();
+        ResultSet resultset = null;
+        ResultSet resultset2 = null;
+        Statement stmt = null;
+        Statement stmt2 = null;
+        
+        if (db.connect()) {
+            final Connection conn = db.getConnection();
+            try {
+                stmt = conn.createStatement();
+                resultset = stmt.executeQuery("select * from Donantes");
+                numcols = resultset.getMetaData().getColumnCount();
+                while (resultset.next()) {
+                    List <String> row = new ArrayList<>(numcols); 
+
+                    for (int i=1; i<= numcols; i++) {  // don't skip the last column, use <=
+                        row.add(resultset.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res.add(row); // add it to the result
+                    //System.out.print("\n");
+                } 
+                stmt2 = conn.createStatement();
+                resultset2 = stmt.executeQuery("select * from TipoDon");
+                numcols = resultset2.getMetaData().getColumnCount();
+                while (resultset2.next()) {
+                    List <String> row = new ArrayList<>(numcols); 
+
+                    for (int i=1; i<= numcols; i++) {  // don't skip the last column, use <=
+                        row.add(resultset2.getString(i));
+                        //System.out.print(resultset.getString(i) + "\t");
+                    }
+                    res2.add(row); // add it to the result
+                    //System.out.print("\n");
+                } 
+            } catch (SQLException ex) {
+                Logger.getLogger(Donantes.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (resultset != null){
+                    try {
+                        resultset.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Donantes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Donantes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        for (int i=0; i< res.size(); i++) {  
+            jComboBox1.addItem(res.get(i).get(1));
+        }
+        for (int i=0; i< res.size(); i++) {  
+            jComboBox2.addItem(res2.get(i).get(1));
+        }
+        jComboBox1.setSelectedIndex(-1);
+        jComboBox2.setSelectedIndex(-1);
+    
     }
 
     /**
@@ -77,7 +148,16 @@ public class Donantes extends javax.swing.JFrame {
 
         jLabel1.setText("Donante");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeVisible(evt);
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel2.setText("Clave");
 
@@ -111,14 +191,12 @@ public class Donantes extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox1.setText("jCheckBox1");
+        jCheckBox1.setText("Tiene Sucursales");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel12.setText("Ciudad");
 
@@ -359,6 +437,32 @@ public class Donantes extends javax.swing.JFrame {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        int selectedindex = jComboBox1.getSelectedIndex();
+        jTextField1.setText(res.get(selectedindex).get(0));
+        jTextField2.setText(jComboBox1.getSelectedItem().toString());
+        jTextField3.setText(jComboBox1.getSelectedItem().toString());
+        jTextField4.setText(res.get(selectedindex).get(4));
+        jTextField10.setText(res.get(selectedindex).get(5));
+        jTextField11.setText(res.get(selectedindex).get(6));
+        jTextField7.setText(res.get(selectedindex).get(7));
+        jTextField8.setText(res.get(selectedindex).get(8));
+        jTextField5.setText(res.get(selectedindex).get(9));
+        jTextField12.setText(res.get(selectedindex).get(10));
+        jTextField6.setText(res.get(selectedindex).get(3));
+        // sucursales es checkbox
+        jTextField9.setText(res.get(selectedindex).get(9));
+        // frecuencia es radio button
+        jTextField14.setText(res.get(selectedindex).get(14));
+        // jcombobox2 es selectbox
+        
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
+
+    private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
 
     /**
      * @param args the command line arguments
