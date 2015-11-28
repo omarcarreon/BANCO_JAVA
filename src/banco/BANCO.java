@@ -36,7 +36,7 @@ public class BANCO {
             
         }
                 */
-       new Formularios().setVisible(true);
+       new Sucursales().setVisible(true);
        
     }    
 }
