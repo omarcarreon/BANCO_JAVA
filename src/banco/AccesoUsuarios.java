@@ -25,18 +25,20 @@ public class AccesoUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form AccesoUsuarios
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    int editar = 0;
+    int numcols; // Indica numero de columnas generadas en el query de select
+    List <List <String> > res = new ArrayList<>(); // ArrayList para guardar los usuarios
+    int editar = 0; // indica si está editando o grabando
     public AccesoUsuarios() {
         initComponents();
-        getNivelesAcceso();
+        getNivelesAcceso(); // obtiene accesos de usuarios
     }
+    // funcion para obtener niveles de acceso e inicializar campos
     private void getNivelesAcceso() {
         Database db = new Database();
         ResultSet resultset = null;
         Statement stmt = null;
-                
+        // si la conexión a la base de datos es exitosa, se hace query select
+        
         if (db.connect()) {
             final Connection conn = db.getConnection();
             try {
@@ -83,7 +85,7 @@ public class AccesoUsuarios extends javax.swing.JFrame {
         jComboBox2.setSelectedIndex(-1);
         
     }
-    
+    // Obtiene todos los formularios
     private void getFormularios() {
         Database db = new Database();
         ResultSet resultset2 = null;
@@ -139,6 +141,7 @@ public class AccesoUsuarios extends javax.swing.JFrame {
             model.insertRow(jTable1.getRowCount(), new Object[] {id,n});
         }
     }
+    // Obtiene todos los menus existentes
     private void getMenus() {
         Database db = new Database();
         ResultSet resultset2 = null;
@@ -324,7 +327,7 @@ public class AccesoUsuarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // Cierra ventana al presionar boton Salir
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -337,11 +340,11 @@ public class AccesoUsuarios extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
-
+    // Funcion de acciones cuando opcion del combobox acceso es seleccionado
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         JTableHeader th = jTable1.getTableHeader();
-        if (jComboBox1.getSelectedIndex() == 1) {
+        if (jComboBox1.getSelectedIndex() == 1) { // Si selecciona formularios
             TableColumnModel tcm = th.getColumnModel();
             TableColumn tc1 = tcm.getColumn(0);
             TableColumn tc2 = tcm.getColumn(1);
@@ -351,7 +354,7 @@ public class AccesoUsuarios extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             getFormularios();
-        } else if (jComboBox1.getSelectedIndex() == 2) {
+        } else if (jComboBox1.getSelectedIndex() == 2) { // si selecciona menu
             TableColumnModel tcm = th.getColumnModel();
             TableColumn tc1 = tcm.getColumn(0);
             TableColumn tc2 = tcm.getColumn(1);

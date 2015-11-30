@@ -22,25 +22,23 @@ public class Captura_Proveedores extends javax.swing.JFrame {
     /**
      * Creates new form Captura_Proveedores
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    int editar = 0;
+    int numcols; // numero de columnas en las queries
+    List <List <String> > res = new ArrayList<>(); // guarda info de proveedores
+    int editar = 0; // indica si edita o graba
     public Captura_Proveedores() {
         initComponents();
-        getProveedores();
-        jButton2.setVisible(false);
-        jButton3.setVisible(false);
-        jButton4.setVisible(false);
+        getProveedores(); // obtiene proveedores
+        jButton2.setVisible(false); // oculta boton editar
+        jButton3.setVisible(false); // oculta boton borrar
+        jButton4.setVisible(false); // oculta boton grabar
     }
-    
+    // Funcion con query de sql para obtener proveedores y no permite editar campos
     private void getProveedores() {
         Database db = new Database();
         ResultSet resultset = null;
         Statement stmt = null;
         String idGrupoAlim = null;
-        
-        
-        
+
         if (db.connect()) {
             final Connection conn = db.getConnection();
             try {
@@ -439,7 +437,8 @@ public class Captura_Proveedores extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // Funcion de boton Nuevo, inicializa campos en vacio, permite editar campos
+    // y muestra botones de grabar
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -476,7 +475,7 @@ public class Captura_Proveedores extends javax.swing.JFrame {
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
-
+    // Funcion cuando se selecciona una opcion del primer combobox
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -521,12 +520,12 @@ public class Captura_Proveedores extends javax.swing.JFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
-
+    // Salir de pantalla
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    // Acciones de boton borrar, borra registro en la base de datos
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try
@@ -580,7 +579,7 @@ public class Captura_Proveedores extends javax.swing.JFrame {
           System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // Acciones boton Editar, permite editar registro 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -602,7 +601,7 @@ public class Captura_Proveedores extends javax.swing.JFrame {
             jButton4.setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // Acciones para boton Grabar, crea un registro o lo edita
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -694,7 +693,7 @@ public class Captura_Proveedores extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    // Acciones de boton Cancelar, borra campos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");

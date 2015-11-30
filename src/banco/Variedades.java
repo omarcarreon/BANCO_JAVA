@@ -20,9 +20,10 @@ public class Variedades extends javax.swing.JFrame {
     /**
      * Creates new form Variedades
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    int editar = 0;
+    int numcols; // guarda numero de columnas generadas por query
+    List <List <String> > res = new ArrayList<>(); // guarda respuesta de query
+    int editar = 0; // indica si edita o graba
+    // inicializa componentes y llama a funcion para obtener variedades
     public Variedades() {
         initComponents();
         getVariedades();
@@ -30,6 +31,7 @@ public class Variedades extends javax.swing.JFrame {
         jButton3.setVisible(false);
         jButton4.setVisible(false);
     }
+    // Llama a base de datos para obtener variedades
     private void getVariedades(){
         Database db = new Database();
         ResultSet resultset = null;
@@ -302,7 +304,7 @@ public class Variedades extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
+    // boton Nuevo, permie editar campos para crear un nuevo registro
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -321,7 +323,7 @@ public class Variedades extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
-
+    // acciones para cuando selecciona una variedad
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -335,12 +337,12 @@ public class Variedades extends javax.swing.JFrame {
             jButton4.setVisible(false);
          }
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
-
+    // salir de ventana
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    // boton editar, permite editar campos para editar un registro
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEditable(true);
@@ -349,7 +351,7 @@ public class Variedades extends javax.swing.JFrame {
         editar = 1;
         jButton4.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // boton borrar, borra un registro de variedades
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try
@@ -384,7 +386,7 @@ public class Variedades extends javax.swing.JFrame {
           System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // graba o edita un registro de variedades en la base de datos
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -445,7 +447,7 @@ public class Variedades extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    // boton cancelar, limpia campos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");

@@ -22,9 +22,11 @@ public class Grupo_Referencia extends javax.swing.JFrame {
     /**
      * Creates new form Grupo_Referencia
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    int editar = 0;
+    int numcols; // guarda numero de columnas de query
+    List <List <String> > res = new ArrayList<>(); // guarda respuesta de query
+    int editar = 0; // edita o graba registro
+    
+    // inicializa componentes y llama funcion para obtener grupos de referencia
     public Grupo_Referencia() {
         initComponents();
         getGrupoReferencia();
@@ -32,6 +34,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
         jButton3.setVisible(false);
         jButton5.setVisible(false);
     }
+    // Funcion para obtener grupos de referencia de base de datos
     private void getGrupoReferencia() {
         Database db = new Database();
         ResultSet resultset = null;
@@ -232,7 +235,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // borra un registro de grupo de referencia
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try
@@ -268,7 +271,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
           System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // Boton guardar, permite guardar en base de datos o editar un registro
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -330,7 +333,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // Boton Editar, permite editar campos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEditable(true);
@@ -338,7 +341,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
         editar = 1;
         jButton3.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    // Salir de pantalla
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -347,7 +350,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
+    // Acciones de cuando se selecciona un grupo de referencia en combobox
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -367,7 +370,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
-
+    // Acciones para boton de Nuevo, borra campos y permite escribir en ellos
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -379,7 +382,7 @@ public class Grupo_Referencia extends javax.swing.JFrame {
         jButton3.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    // Boton cancelar, pone en blanco los campos
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");

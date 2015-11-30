@@ -22,9 +22,10 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
     /**
      * Creates new form TiposDeDonantes
      */
-        int numcols;
-    List <List <String> > res = new ArrayList<>();
-    int editar = 0;
+        int numcols; // numero de columnas en respuesta de query
+    List <List <String> > res = new ArrayList<>(); // arreglo que guarda query
+    int editar = 0; // indica si edita o graba
+    // inicializa campos y llama a funcion para obtener tipos de donantes
     public TiposDeDonantes() {
         initComponents();
         getTiposDonantes();
@@ -32,7 +33,7 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
         jButton3.setVisible(false);
         jButton4.setVisible(false);
     }
-    
+    // llama a base de datos y obtiene tipos de donantes
     public void getTiposDonantes() {
         Database db = new Database();
         ResultSet resultset = null;
@@ -286,7 +287,7 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    // boton nuevo, limpia campos y permite crear un nuevo registro
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -298,12 +299,12 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
         jButton4.setVisible(false);
         editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    // salir de ventana
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    // aciones para cuando selecciona un tipo de donante
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -322,7 +323,7 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
-
+    // boton editar, permite editar campos
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEditable(true);
@@ -330,7 +331,7 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
         editar = 1;
         jButton2.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // borra un registro
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         try
@@ -366,7 +367,7 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
           System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    // graba o edita un registro en base de datos
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -427,7 +428,7 @@ public final class TiposDeDonantes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // boton cancelar, limpia campos
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");

@@ -21,10 +21,11 @@ public class Unidades_medida extends javax.swing.JFrame {
     /**
      * Creates new form Unidades_medida
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    int editar = 0;
-
+    int numcols; // numero de columnas en respuesta de query
+    List <List <String> > res = new ArrayList<>(); // arreglo que guarda query
+    int editar = 0; // indica si edita o graba
+    
+    // inicializa campos y llama a funcion para obtener unidades de medida
     public Unidades_medida() {
         initComponents();
         getUnidades();
@@ -32,6 +33,7 @@ public class Unidades_medida extends javax.swing.JFrame {
         jButton3.setVisible(false);
         jButton5.setVisible(false);
     }
+    // llama a base de datos y obtiene unidades de medida
     private void getUnidades() {
         Database db = new Database();
         ResultSet resultset = null;
@@ -252,7 +254,7 @@ public class Unidades_medida extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // boton editar, permite editar campos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEditable(true);
@@ -260,7 +262,7 @@ public class Unidades_medida extends javax.swing.JFrame {
         editar = 1;
         jButton3.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    // borra un registor de unidades de medida
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try
@@ -296,7 +298,7 @@ public class Unidades_medida extends javax.swing.JFrame {
           System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // permite grabar o editar un registro de unidades de medida
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -357,7 +359,7 @@ public class Unidades_medida extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // salir de ventana
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -366,7 +368,7 @@ public class Unidades_medida extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
+    // acciones para cuando selecciona una unidad de medida
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -385,7 +387,7 @@ public class Unidades_medida extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
-
+    // boton nuevo, limpia campos y permite crear un nuevo registro
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -397,7 +399,7 @@ public class Unidades_medida extends javax.swing.JFrame {
         jButton3.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    // boton cancelar, limpia campos
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");

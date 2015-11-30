@@ -23,13 +23,14 @@ public class Formularios extends javax.swing.JFrame {
     /**
      * Creates new form Formularios
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
+    int numcols; // guarda numero de columnas generadas en query
+    List <List <String> > res = new ArrayList<>(); // guarda respuesta de query
+    // inicalizar componentes y llama funcion para obtener formularios
     public Formularios() {
         initComponents();
         getFormularios();
     }
-    
+    // Funcion para obtener formularios con query select
     private void getFormularios() {
         Database db = new Database();
         ResultSet resultset = null;
@@ -169,12 +170,12 @@ public class Formularios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // Salir de ventana
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    // Funcion para borrar un registro
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
          try

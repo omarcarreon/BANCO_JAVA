@@ -22,9 +22,10 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
     /**
      * Creates new form Grupo_Alimenticio
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    int editar=0;
+    int numcols; // guarda numero de columnas de query
+    List <List <String> > res = new ArrayList<>(); // guarda respuesta de query
+    int editar=0; // edita o graba registro
+    // inicializa componentes y llama funcion para obtener grupos alimenticios
     public Grupo_Alimenticio() {
         initComponents();
         getItems();
@@ -33,6 +34,7 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
         jButton4.setVisible(false);
         
     }
+    // Funcion para hacer query y obtener todos los grupos alimenticios
     private void getItems(){
         Database db = new Database();
         ResultSet resultset = null;
@@ -307,7 +309,7 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // Acciones para boton de Nuevo, limpia campos y permite escribir en ellos
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -327,7 +329,7 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    // Acciones para cuando se selecciona un grupo alimenticio del combobox
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -353,12 +355,12 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
         */
         
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
-
+    // Salir de pantalla
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    // Boton guardar, permite guardar en base de datos o editar un registro
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -428,7 +430,7 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    // Boton cancelar, pone en blanco los campos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -437,7 +439,7 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
         jTextField2.setEditable(false);
         editar = 0;
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    // borra un registro de grupo alimenticio
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try
@@ -475,7 +477,7 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
           System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // Boton Editar, permite editar campos
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEditable(true);

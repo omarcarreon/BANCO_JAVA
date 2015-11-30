@@ -21,10 +21,13 @@ public class Donantes extends javax.swing.JFrame {
     /**
      * Creates new form Donantes
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    List <List <String> > res2 = new ArrayList<>();
-    int editar = 0;
+    int numcols;// numero de columnas en las queries
+    List <List <String> > res = new ArrayList<>(); // guarda info de donantes
+    List <List <String> > res2 = new ArrayList<>(); // guarda tipos de donantes
+    int editar = 0; // indica si edita o graba
+    
+    // Inicializa campos de acuerdo al donante seleccionado, 
+    // Realiza conexión a base de datos y select a donantes
     public Donantes() {
         initComponents();
         Database db = new Database();
@@ -608,7 +611,7 @@ public class Donantes extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    // Acciones de boton Nuevo, permite escribir en los campos
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
@@ -643,7 +646,7 @@ public class Donantes extends javax.swing.JFrame {
         jButton3.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    // Acciones de boton Editar, permite editar datos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         jTextField2.setEditable(true);
@@ -661,7 +664,7 @@ public class Donantes extends javax.swing.JFrame {
         editar = 1;
         jButton3.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    // Borra un registro 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try
@@ -725,7 +728,7 @@ public class Donantes extends javax.swing.JFrame {
           System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // Guarda un registro y Edita un registro, en la base de datos
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -851,7 +854,7 @@ public class Donantes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // Accion de botón Cancelar, borra campos
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -888,7 +891,7 @@ public class Donantes extends javax.swing.JFrame {
         jRadioButton4.setSelected(false);
         editar = 0;
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    // Selecciona radiobutton 1, quita seleccion de los demas radio buttons
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
         if (jRadioButton1.isSelected()){
@@ -897,7 +900,7 @@ public class Donantes extends javax.swing.JFrame {
             jRadioButton4.setSelected(false);
         }
     }//GEN-LAST:event_jRadioButton1ActionPerformed
-
+// Selecciona radiobutton 3, quita seleccion de los demas radio buttons
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
         // TODO add your handling code here:
         if (jRadioButton3.isSelected()){
@@ -906,7 +909,7 @@ public class Donantes extends javax.swing.JFrame {
             jRadioButton4.setSelected(false);
         }
     }//GEN-LAST:event_jRadioButton3ActionPerformed
-
+    // Selecciona radiobutton 4, quita seleccion de los demas radio buttons
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
         // TODO add your handling code here:
         if (jRadioButton4.isSelected()){
@@ -915,7 +918,7 @@ public class Donantes extends javax.swing.JFrame {
             jRadioButton3.setSelected(false);
         }
     }//GEN-LAST:event_jRadioButton4ActionPerformed
-
+    // Selecciona radiobutton 2, quita seleccion de los demas radio buttons
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
         if (jRadioButton2.isSelected()){

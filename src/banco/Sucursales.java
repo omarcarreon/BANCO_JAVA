@@ -21,10 +21,11 @@ public class Sucursales extends javax.swing.JFrame {
     /**
      * Creates new form Sucursales
      */
-    int numcols;
-    List <List <String> > res = new ArrayList<>();
-    List <List <String> > res2 = new ArrayList<>();
-    int editar = 0;
+    int numcols; // guarda numero de columnas de query
+    List <List <String> > res = new ArrayList<>();// guarda respuesta de query donantes
+    List <List <String> > res2 = new ArrayList<>();// guarda respuesta de query sucursales
+    int editar = 0;//indica si edita o graba
+    // inicializa componentes y llama a funcion para obtener donantes
     public Sucursales() {
         initComponents();
         getDonantes();
@@ -34,6 +35,7 @@ public class Sucursales extends javax.swing.JFrame {
         jButton5.setVisible(false);
         jButton6.setVisible(false);
     }
+    // Funcion para obtener donantes, llama a la base de datos
     private void getDonantes() {
         Database db = new Database();
         ResultSet resultset = null;
@@ -84,7 +86,7 @@ public class Sucursales extends javax.swing.JFrame {
         jComboBox1.setSelectedIndex(-1);
         jPanel1.setVisible(false);
     }
-    
+    // obtiene sucursales
     private void getSucursales() {
         res2 = new ArrayList<>();
          try
@@ -418,12 +420,12 @@ public class Sucursales extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // salir de ventana
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    // selecciona un donante
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
@@ -475,7 +477,7 @@ public class Sucursales extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeVisible
-
+    // graba o edita una sucursal
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int selectedindex = jComboBox1.getSelectedIndex();
         if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText()) && !"".equals(jTextField3.getText())
@@ -555,7 +557,7 @@ public class Sucursales extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // boton nuevo, limpia campos
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -585,7 +587,7 @@ public class Sucursales extends javax.swing.JFrame {
         jButton2.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    // boton editar, permite editar campos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEnabled(true);
@@ -601,7 +603,7 @@ public class Sucursales extends javax.swing.JFrame {
         editar = 1;
         jButton2.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    // borra un registro de sucursal
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox2.getSelectedIndex();
@@ -656,7 +658,7 @@ public class Sucursales extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una sucursal válida.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    // boton cancelar,limpia campos
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         jTextField1.setText("");
@@ -683,7 +685,7 @@ public class Sucursales extends javax.swing.JFrame {
         
         editar = 0;
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // selecciona una sucursal
     private void jComboBox2PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox2PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox2.getSelectedIndex();
