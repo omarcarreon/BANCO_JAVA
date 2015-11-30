@@ -28,6 +28,8 @@ public class Empresas extends javax.swing.JFrame {
     public Empresas() {
         initComponents();
         getEmpresas();
+        jButton1.setVisible(false);
+        jButton2.setVisible(false);
     }
     
     private void getEmpresas() {
@@ -97,6 +99,7 @@ public class Empresas extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Empresas");
@@ -122,7 +125,7 @@ public class Empresas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, 0, 414, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,15 +166,24 @@ public class Empresas extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Nuevo");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
@@ -179,7 +191,7 @@ public class Empresas extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +203,8 @@ public class Empresas extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton4)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton5))
                 .addGap(16, 16, 16))
         );
 
@@ -206,46 +219,79 @@ public class Empresas extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-        jTextField1.setText(jComboBox1.getSelectedItem().toString());
+        if (selectedindex != -1){
+            jTextField1.setText(jComboBox1.getSelectedItem().toString());
+            editar = 0;
+            jTextField1.setEditable(false);
+            jButton2.setVisible(true);
+            jButton1.setVisible(false);
+            
+        }
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEditable(true);
         editar = 1;
+        jButton1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
+        if (!"".equals(jTextField1.getText())){
+            if (editar==0 && jTextField1.isEditable()){
+                Connection con=null;
+                PreparedStatement s;
+                String url="jdbc:mysql://localhost:3306/Banco";
+                String dbDriver = "com.mysql.jdbc.Driver";
+                String user="root";
+                String pass="";
+                try{
+                        Class.forName(dbDriver);
+                        con=(Connection) DriverManager.getConnection(url,user,pass);
+                        s=con.prepareStatement("insert into Empresas values(?)");
+                        s.setString(1,jTextField1.getText());
 
-        if (editar == 1) {
-            try
-            {
-              // create the mysql database connection
-              String myDriver = "com.mysql.jdbc.Driver";
-              String myUrl = "jdbc:mysql://localhost:3306/Banco";
-              Class.forName(myDriver);
-                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                    String idempresa = res.get(selectedindex).get(0);
-                    String query = "update Empresas set idEmpresa = ? where idEmpresa = ?";
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString(1, jTextField1.getText());
-                    preparedStmt.setString(2, idempresa);
-                    
-                    // execute the preparedstatement
-                    preparedStmt.execute();
+                        s.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Guardado.");
+                        editar = 0;
+                        this.dispose();
                 }
-              JOptionPane.showMessageDialog(null, "Editado.");
-              editar = 0;
-              this.dispose();
+                catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (editar == 1) {
+                try
+                {
+                  // create the mysql database connection
+                  String myDriver = "com.mysql.jdbc.Driver";
+                  String myUrl = "jdbc:mysql://localhost:3306/Banco";
+                  Class.forName(myDriver);
+                    try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                        String idempresa = res.get(selectedindex).get(0);
+                        String query = "update Empresas set idEmpresa = ? where idEmpresa = ?";
+                        PreparedStatement preparedStmt = conn.prepareStatement(query);
+                        preparedStmt.setString(1, jTextField1.getText());
+                        preparedStmt.setString(2, idempresa);
 
+                        // execute the preparedstatement
+                        preparedStmt.execute();
+                    }
+                  JOptionPane.showMessageDialog(null, "Editado.");
+                  editar = 0;
+                  this.dispose();
+
+                }
+                catch (ClassNotFoundException | SQLException | HeadlessException e)
+                {
+                  System.err.println("Got an exception! ");
+                  System.err.println(e.getMessage());
+                }
             }
-            catch (ClassNotFoundException | SQLException | HeadlessException e)
-            {
-              System.err.println("Got an exception! ");
-              System.err.println(e.getMessage());
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -255,6 +301,16 @@ public class Empresas extends javax.swing.JFrame {
         jTextField1.setEditable(false);
         editar = 0;
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField1.setEditable(true);
+        
+        jButton2.setVisible(false);
+        jButton1.setVisible(true);
+        editar = 0;
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,6 +352,7 @@ public class Empresas extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;

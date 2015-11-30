@@ -129,6 +129,9 @@ public class Donantes extends javax.swing.JFrame {
         jTextField11.setEditable(false);
         jTextField12.setEditable(false);
         jTextField13.setEditable(false);
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
+        jButton5.setVisible(false);
 
     
     }
@@ -295,12 +298,32 @@ public class Donantes extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Frecuencia"));
 
         jRadioButton3.setText("Permanente");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
 
         jRadioButton4.setText("Ocasional");
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
 
         jRadioButton1.setText("Unico");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         jRadioButton2.setText("AMBA");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -339,15 +362,27 @@ public class Donantes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(44, 44, 44)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addComponent(jLabel1)
                         .addGap(90, 90, 90)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -358,7 +393,7 @@ public class Donantes extends javax.swing.JFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -385,34 +420,25 @@ public class Donantes extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField3))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton4))))
+                                        .addComponent(jTextField3))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(102, 102, 102)
                                 .addComponent(jCheckBox1))
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jButton5)
-                                .addGap(38, 38, 38)
-                                .addComponent(jButton2)
-                                .addGap(29, 29, 29)
-                                .addComponent(jButton3)
-                                .addGap(185, 185, 185)
-                                .addComponent(jButton6))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(240, 240, 240)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField13)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                                     .addComponent(jTextField12)
                                     .addComponent(jTextField11)
                                     .addComponent(jTextField10))))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4, jButton5, jButton6});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -476,13 +502,13 @@ public class Donantes extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
-                    .addComponent(jButton6))
+                    .addComponent(jButton5)
+                    .addComponent(jButton6)
+                    .addComponent(jButton1))
                 .addGap(49, 49, 49))
         );
 
@@ -504,54 +530,73 @@ public class Donantes extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-        jTextField1.setText(res.get(selectedindex).get(0));
-        jTextField2.setText(jComboBox1.getSelectedItem().toString());
-        jTextField3.setText(jComboBox1.getSelectedItem().toString());
-        jTextField4.setText(res.get(selectedindex).get(4));
-        jTextField10.setText(res.get(selectedindex).get(5));
-        jTextField11.setText(res.get(selectedindex).get(6));
-        jTextField7.setText(res.get(selectedindex).get(7));
-        jTextField8.setText(res.get(selectedindex).get(8));
-        jTextField5.setText(res.get(selectedindex).get(9));
-        jTextField12.setText(res.get(selectedindex).get(10));
-        jTextField6.setText(res.get(selectedindex).get(3));
-        // sucursales es checkbox
-        int sucursales = Integer.parseInt(res.get(selectedindex).get(11));
-        if (sucursales == 1){
-            jCheckBox1.setSelected(true);
-        }else{
-            jCheckBox1.setSelected(false);
+            if (selectedindex != -1){
+            jTextField1.setText(res.get(selectedindex).get(0));
+            jTextField2.setText(jComboBox1.getSelectedItem().toString());
+            jTextField3.setText(jComboBox1.getSelectedItem().toString());
+            jTextField4.setText(res.get(selectedindex).get(4));
+            jTextField10.setText(res.get(selectedindex).get(5));
+            jTextField11.setText(res.get(selectedindex).get(6));
+            jTextField7.setText(res.get(selectedindex).get(7));
+            jTextField8.setText(res.get(selectedindex).get(8));
+            jTextField5.setText(res.get(selectedindex).get(9));
+            jTextField12.setText(res.get(selectedindex).get(10));
+            jTextField6.setText(res.get(selectedindex).get(3));
+            // sucursales es checkbox
+            int sucursales = Integer.parseInt(res.get(selectedindex).get(11));
+            if (sucursales == 1){
+                jCheckBox1.setSelected(true);
+            }else{
+                jCheckBox1.setSelected(false);
 
-        }
-        jTextField9.setText(res.get(selectedindex).get(9));
-        // frecuencia es radio button
-        int frecuencia = Integer.parseInt(res.get(selectedindex).get(13));
-        if (frecuencia == 1){
-            jRadioButton1.setSelected(false);
-            jRadioButton2.setSelected(false);
-            jRadioButton3.setSelected(true);
-            jRadioButton4.setSelected(false);
-        }else if (frecuencia == 2){
-            jRadioButton1.setSelected(false);
-            jRadioButton2.setSelected(false);
-            jRadioButton3.setSelected(false);
-            jRadioButton4.setSelected(true);
-        } else if (frecuencia == 3){
-            jRadioButton1.setSelected(true);
-            jRadioButton2.setSelected(false);
-            jRadioButton3.setSelected(false);
-            jRadioButton4.setSelected(false);
-        } else {
-            jRadioButton1.setSelected(false);
-            jRadioButton2.setSelected(true);
-            jRadioButton3.setSelected(false);
-            jRadioButton4.setSelected(false);
-        }
+            }
+            jTextField9.setText(res.get(selectedindex).get(9));
+            // frecuencia es radio button
+            int frecuencia = Integer.parseInt(res.get(selectedindex).get(13));
+            if (frecuencia == 1){
+                jRadioButton1.setSelected(false);
+                jRadioButton2.setSelected(false);
+                jRadioButton3.setSelected(true);
+                jRadioButton4.setSelected(false);
+            }else if (frecuencia == 2){
+                jRadioButton1.setSelected(false);
+                jRadioButton2.setSelected(false);
+                jRadioButton3.setSelected(false);
+                jRadioButton4.setSelected(true);
+            } else if (frecuencia == 3){
+                jRadioButton1.setSelected(true);
+                jRadioButton2.setSelected(false);
+                jRadioButton3.setSelected(false);
+                jRadioButton4.setSelected(false);
+            } else {
+                jRadioButton1.setSelected(false);
+                jRadioButton2.setSelected(true);
+                jRadioButton3.setSelected(false);
+                jRadioButton4.setSelected(false);
+            }
 
-        jTextField13.setText(res.get(selectedindex).get(14));
-        // jcombobox2 es selectbox
-  
-        jComboBox2.setSelectedItem(res.get(selectedindex).get(16));
+            jTextField13.setText(res.get(selectedindex).get(14));
+            // jcombobox2 es selectbox
+            
+            jComboBox2.setSelectedItem(res.get(selectedindex).get(16));
+            jTextField1.setEditable(false);
+            jTextField2.setEditable(false);
+            jTextField3.setEditable(false);
+            jTextField4.setEditable(false);
+            jTextField5.setEditable(false);
+            jTextField6.setEditable(false);
+            jTextField7.setEditable(false);
+            jTextField8.setEditable(false);
+            jTextField9.setEditable(false);
+            jTextField10.setEditable(false);
+            jTextField11.setEditable(false);
+            jTextField12.setEditable(false);
+            jTextField13.setEditable(false);
+           
+            jButton2.setVisible(true);
+            jButton3.setVisible(false);
+            jButton5.setVisible(true);
+        }
         
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
@@ -593,7 +638,9 @@ public class Donantes extends javax.swing.JFrame {
         jTextField11.setEditable(true);
         jTextField12.setEditable(true);
         jTextField13.setEditable(true);
-        
+        jButton2.setVisible(false);
+        jButton5.setVisible(false);
+        jButton3.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -612,6 +659,7 @@ public class Donantes extends javax.swing.JFrame {
         jTextField12.setEditable(true);
         jTextField13.setEditable(true);
         editar = 1;
+        jButton3.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -682,117 +730,125 @@ public class Donantes extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
         int selectedtipodonante =jComboBox2.getSelectedIndex();
-        if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
-            Connection con=null;
-            PreparedStatement s;
-            String url="jdbc:mysql://localhost:3306/Banco";
-            String dbDriver = "com.mysql.jdbc.Driver";
-            String user="root";
-            String pass="";
-            try{
-                    Class.forName(dbDriver);
-                    con=(Connection) DriverManager.getConnection(url,user,pass);
-                    s=con.prepareStatement("insert into Donantes values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                    s.setString(1,jTextField1.getText());
-                    s.setString(2,jTextField2.getText());
-                    s.setString(3,jTextField3.getText());
-                    s.setString(4,jTextField6.getText());
-                    s.setString(5,jTextField4.getText());
-                    s.setString(6,jTextField10.getText());
-                    s.setString(7,jTextField11.getText());
-                    s.setString(8,jTextField7.getText());
-                    s.setString(9,jTextField8.getText());
-                    s.setString(10,jTextField5.getText());
-                    s.setString(11,jTextField12.getText());
-                    if (jCheckBox1.isSelected()){
-                        s.setString(12,"1");
-                    } else {
-                        s.setString(12,"0");
-                    }
-                    s.setString(13,jTextField9.getText());
-                    if (jRadioButton1.isSelected()){
-                        s.setString(14,"3");
-                    } else if (jRadioButton2.isSelected()){
-                        s.setString(14,"4");
-                    } else if (jRadioButton3.isSelected()){
-                        s.setString(14,"1");
-                    } else if (jRadioButton4.isSelected()){
-                        s.setString(14,"2");
-                    }
-                    s.setString(15,jTextField13.getText());
-                    // 16 tipo de donante
-                    s.setString(16,jComboBox2.getItemAt(selectedtipodonante).toString());
-                    // 17 idtipodon
-                    s.setString(17,jComboBox2.getItemAt(selectedtipodonante).toString());
-                    //18 usuarioalta
-                    s.setString(18,"");
+        if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText()) && !"".equals(jTextField3.getText()) && !"".equals(jTextField4.getText())
+                && !"".equals(jTextField5.getText()) && !"".equals(jTextField6.getText()) && !"".equals(jTextField7.getText())
+                && !"".equals(jTextField9.getText()) && !"".equals(jTextField10.getText())
+                && !"".equals(jTextField11.getText()) && !"".equals(jTextField12.getText()) && !"".equals(jTextField13.getText())
+                && (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected() || jRadioButton4.isSelected())){
+            if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
+                Connection con=null;
+                PreparedStatement s;
+                String url="jdbc:mysql://localhost:3306/Banco";
+                String dbDriver = "com.mysql.jdbc.Driver";
+                String user="root";
+                String pass="";
+                try{
+                        Class.forName(dbDriver);
+                        con=(Connection) DriverManager.getConnection(url,user,pass);
+                        s=con.prepareStatement("insert into Donantes values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        s.setString(1,jTextField1.getText());
+                        s.setString(2,jTextField2.getText());
+                        s.setString(3,jTextField3.getText());
+                        s.setString(4,jTextField6.getText());
+                        s.setString(5,jTextField4.getText());
+                        s.setString(6,jTextField10.getText());
+                        s.setString(7,jTextField11.getText());
+                        s.setString(8,jTextField7.getText());
+                        s.setString(9,jTextField8.getText());
+                        s.setString(10,jTextField5.getText());
+                        s.setString(11,jTextField12.getText());
+                        if (jCheckBox1.isSelected()){
+                            s.setString(12,"1");
+                        } else {
+                            s.setString(12,"0");
+                        }
+                        s.setString(13,jTextField9.getText());
+                        if (jRadioButton1.isSelected()){
+                            s.setString(14,"3");
+                        } else if (jRadioButton2.isSelected()){
+                            s.setString(14,"4");
+                        } else if (jRadioButton3.isSelected()){
+                            s.setString(14,"1");
+                        } else if (jRadioButton4.isSelected()){
+                            s.setString(14,"2");
+                        }
+                        s.setString(15,jTextField13.getText());
+                        // 16 tipo de donante
+                        s.setString(16,jComboBox2.getItemAt(selectedtipodonante).toString());
+                        // 17 idtipodon
+                        s.setString(17,jComboBox2.getItemAt(selectedtipodonante).toString());
+                        //18 usuarioalta
+                        s.setString(18,"");
 
 
-                    s.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Guardado.");
-                    editar = 0;
-                    this.dispose();
-            }
-            catch (SQLException | ClassNotFoundException e) {
-                System.out.println(e);
-                  }
-        } else if (editar == 1){
-            try
-            {
-              // create the mysql database connection
-              String myDriver = "com.mysql.jdbc.Driver";
-              String myUrl = "jdbc:mysql://localhost:3306/Banco";
-              Class.forName(myDriver);
-                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                    String query = "update Donantes set idDonante = ? , Donante = ? , Nombre = ? , Direccion = ? , Colonia = ? , Ciudad = ? , Estado = ? , Telefono = ? , Fax = ? , Contacto = ? , Rfc = ? , Sucursales = ?, FechaAlta = ? , Frecuencia = ? , Mail = ? , TipoDonante = ? , IDTipoDon = ? , UsuarioAlta = ? where idDonante = ?";
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString(1,jTextField1.getText());
-                    preparedStmt.setString(2,jTextField2.getText());
-                    preparedStmt.setString(3,jTextField3.getText());
-                    preparedStmt.setString(4,jTextField6.getText());
-                    preparedStmt.setString(5,jTextField4.getText());
-                    preparedStmt.setString(6,jTextField10.getText());
-                    preparedStmt.setString(7,jTextField11.getText());
-                    preparedStmt.setString(8,jTextField7.getText());
-                    preparedStmt.setString(9,jTextField8.getText());
-                    preparedStmt.setString(10,jTextField5.getText());
-                    preparedStmt.setString(11,jTextField12.getText());
-                    if (jCheckBox1.isSelected()){
-                        preparedStmt.setString(12,"1");
-                    } else {
-                        preparedStmt.setString(12,"0");
-                    }
-                    preparedStmt.setString(13,jTextField9.getText());
-                    if (jRadioButton1.isSelected()){
-                        preparedStmt.setString(14,"3");
-                    } else if (jRadioButton2.isSelected()){
-                        preparedStmt.setString(14,"4");
-                    } else if (jRadioButton3.isSelected()){
-                        preparedStmt.setString(14,"1");
-                    } else if (jRadioButton4.isSelected()){
-                        preparedStmt.setString(14,"2");
-                    }
-                    preparedStmt.setString(15,jTextField13.getText());
-                    // 16 tipo de donante
-                    preparedStmt.setString(16,jComboBox2.getItemAt(selectedtipodonante).toString());
-                    // 17 idtipodon
-                    preparedStmt.setString(17,jComboBox2.getItemAt(selectedtipodonante).toString());
-                    //18 usuarioalta
-                    preparedStmt.setString(18,"");
-                    preparedStmt.setString(19,jTextField1.getText());
-                    // execute the preparedstatement
-                    preparedStmt.execute();
+                        s.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Guardado.");
+                        editar = 0;
+                        this.dispose();
                 }
-              JOptionPane.showMessageDialog(null, "Editado.");
-              editar = 0;
-              this.dispose();
+                catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                      }
+            } else if (editar == 1){
+                try
+                {
+                  // create the mysql database connection
+                  String myDriver = "com.mysql.jdbc.Driver";
+                  String myUrl = "jdbc:mysql://localhost:3306/Banco";
+                  Class.forName(myDriver);
+                    try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                        String query = "update Donantes set idDonante = ? , Donante = ? , Nombre = ? , Direccion = ? , Colonia = ? , Ciudad = ? , Estado = ? , Telefono = ? , Fax = ? , Contacto = ? , Rfc = ? , Sucursales = ?, FechaAlta = ? , Frecuencia = ? , Mail = ? , TipoDonante = ? , IDTipoDon = ? , UsuarioAlta = ? where idDonante = ?";
+                        PreparedStatement preparedStmt = conn.prepareStatement(query);
+                        preparedStmt.setString(1,jTextField1.getText());
+                        preparedStmt.setString(2,jTextField2.getText());
+                        preparedStmt.setString(3,jTextField3.getText());
+                        preparedStmt.setString(4,jTextField6.getText());
+                        preparedStmt.setString(5,jTextField4.getText());
+                        preparedStmt.setString(6,jTextField10.getText());
+                        preparedStmt.setString(7,jTextField11.getText());
+                        preparedStmt.setString(8,jTextField7.getText());
+                        preparedStmt.setString(9,jTextField8.getText());
+                        preparedStmt.setString(10,jTextField5.getText());
+                        preparedStmt.setString(11,jTextField12.getText());
+                        if (jCheckBox1.isSelected()){
+                            preparedStmt.setString(12,"1");
+                        } else {
+                            preparedStmt.setString(12,"0");
+                        }
+                        preparedStmt.setString(13,jTextField9.getText());
+                        if (jRadioButton1.isSelected()){
+                            preparedStmt.setString(14,"3");
+                        } else if (jRadioButton2.isSelected()){
+                            preparedStmt.setString(14,"4");
+                        } else if (jRadioButton3.isSelected()){
+                            preparedStmt.setString(14,"1");
+                        } else if (jRadioButton4.isSelected()){
+                            preparedStmt.setString(14,"2");
+                        }
+                        preparedStmt.setString(15,jTextField13.getText());
+                        // 16 tipo de donante
+                        preparedStmt.setString(16,jComboBox2.getItemAt(selectedtipodonante).toString());
+                        // 17 idtipodon
+                        preparedStmt.setString(17,jComboBox2.getItemAt(selectedtipodonante).toString());
+                        //18 usuarioalta
+                        preparedStmt.setString(18,"");
+                        preparedStmt.setString(19,jTextField1.getText());
+                        // execute the preparedstatement
+                        preparedStmt.execute();
+                    }
+                  JOptionPane.showMessageDialog(null, "Editado.");
+                  editar = 0;
+                  this.dispose();
 
+                }
+                catch (ClassNotFoundException | SQLException | HeadlessException e)
+                {
+                  System.err.println("Got an exception! ");
+                  System.err.println(e.getMessage());
+                }
             }
-            catch (ClassNotFoundException | SQLException | HeadlessException e)
-            {
-              System.err.println("Got an exception! ");
-              System.err.println(e.getMessage());
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -832,6 +888,42 @@ public class Donantes extends javax.swing.JFrame {
         jRadioButton4.setSelected(false);
         editar = 0;
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        if (jRadioButton1.isSelected()){
+            jRadioButton2.setSelected(false);
+            jRadioButton3.setSelected(false);
+            jRadioButton4.setSelected(false);
+        }
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+        if (jRadioButton3.isSelected()){
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(false);
+            jRadioButton4.setSelected(false);
+        }
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        // TODO add your handling code here:
+        if (jRadioButton4.isSelected()){
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(false);
+            jRadioButton3.setSelected(false);
+        }
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+        if (jRadioButton2.isSelected()){
+            jRadioButton1.setSelected(false);
+            jRadioButton3.setSelected(false);
+            jRadioButton4.setSelected(false);
+        }
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     /**
      * @param args the command line arguments

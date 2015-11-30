@@ -28,6 +28,9 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
     public Grupo_Alimenticio() {
         initComponents();
         getItems();
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
+        jButton4.setVisible(false);
         
     }
     private void getItems(){
@@ -50,10 +53,10 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
 
                     for (int i=1; i<= numcols; i++) {  // don't skip the last column, use <=
                         row.add(resultset.getString(i));
-                        //System.out.print(resultset.getString(i) + "\t");
+                        
                     }
                     res.add(row); // add it to the result
-                    //System.out.print("\n");
+                    
                 }
                 
                 
@@ -143,6 +146,7 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
                 jComboBox1PopupMenuWillBecomeInvisible(evt);
             }
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuCanceled(evt);
             }
         });
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -310,6 +314,9 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
         jTextField2.setText("");
         jTextField1.setEditable(true);
         jTextField2.setEditable(true);
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
+        jButton4.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -324,10 +331,17 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-        jTextField1.setText(res.get(selectedindex).get(0));
-        jTextField2.setText(jComboBox1.getSelectedItem().toString());
-        jTextField1.setEditable(false);
-        jTextField2.setEditable(false);
+        if (selectedindex != -1){
+            jTextField1.setText(res.get(selectedindex).get(0));
+            jTextField2.setText(jComboBox1.getSelectedItem().toString());
+            jTextField1.setEditable(false);
+            jTextField2.setEditable(false); 
+            editar = 0;
+            jButton2.setVisible(true);
+            jButton3.setVisible(true);
+            jButton4.setVisible(false);
+        }
+        
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
@@ -349,59 +363,68 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
         if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
-            Connection con=null;
-            PreparedStatement s;
-            String url="jdbc:mysql://localhost:3306/Banco";
-            String dbDriver = "com.mysql.jdbc.Driver";
-            String user="root";
-            String pass="";
-            try{
-                    Class.forName(dbDriver);
-                    con=(Connection) DriverManager.getConnection(url,user,pass);
-                    s=con.prepareStatement("insert into GrupoAlim values(?,?,?)");
-                    s.setString(1,jTextField1.getText());
-                    s.setString(2,jTextField2.getText());
-                    s.setString(3,"0.0");
+            if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText())){
+                Connection con=null;
+                PreparedStatement s;
+                String url="jdbc:mysql://localhost:3306/Banco";
+                String dbDriver = "com.mysql.jdbc.Driver";
+                String user="root";
+                String pass="";
+                try{
+                        Class.forName(dbDriver);
+                        con=(Connection) DriverManager.getConnection(url,user,pass);
+                        s=con.prepareStatement("insert into GrupoAlim values(?,?,?)");
+                        s.setString(1,jTextField1.getText());
+                        s.setString(2,jTextField2.getText());
+                        s.setString(3,"0.0");
 
-                    s.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Guardado.");
-                    editar = 0;
-                    this.dispose();
+                        s.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Guardado.");
+                        editar = 0;
+                        this.dispose();
+                }
+                catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
+
             }
-            catch (SQLException | ClassNotFoundException e) {
-                System.out.println(e);
-                  }
         } else if (editar == 1){
-            try
-            {
-              // create the mysql database connection
-              String myDriver = "com.mysql.jdbc.Driver";
-              String myUrl = "jdbc:mysql://localhost:3306/Banco";
-              Class.forName(myDriver);
-              Connection conn = DriverManager.getConnection(myUrl, "root", "");
+            if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText())){
+                try
+                {
+                  // create the mysql database connection
+                  String myDriver = "com.mysql.jdbc.Driver";
+                  String myUrl = "jdbc:mysql://localhost:3306/Banco";
+                  Class.forName(myDriver);
+                  Connection conn = DriverManager.getConnection(myUrl, "root", "");
 
-              String idgrupoalim = res.get(selectedindex).get(0);
-              String query = "update GrupoAlim set idGrupoAlim = ? , GrupoAlim = ? where idGrupoAlim = ?";
-              PreparedStatement preparedStmt = conn.prepareStatement(query);
-              preparedStmt.setString(1, jTextField1.getText());
-              preparedStmt.setString(2, jTextField2.getText());
-              preparedStmt.setString(3, idgrupoalim);
+                  String idgrupoalim = res.get(selectedindex).get(0);
+                  String query = "update GrupoAlim set idGrupoAlim = ? , GrupoAlim = ? where idGrupoAlim = ?";
+                  PreparedStatement preparedStmt = conn.prepareStatement(query);
+                  preparedStmt.setString(1, jTextField1.getText());
+                  preparedStmt.setString(2, jTextField2.getText());
+                  preparedStmt.setString(3, idgrupoalim);
 
-              // execute the preparedstatement
-              preparedStmt.execute();
+                  // execute the preparedstatement
+                  preparedStmt.execute();
 
-              conn.close();
-              JOptionPane.showMessageDialog(null, "Editado.");
-              editar = 0;
-              this.dispose();
-              
+                  conn.close();
+                  JOptionPane.showMessageDialog(null, "Editado.");
+                  editar = 0;
+                  this.dispose();
 
 
-            }
-            catch (ClassNotFoundException | SQLException | HeadlessException e)
-            {
-              System.err.println("Got an exception! ");
-              System.err.println(e.getMessage());
+
+                }
+                catch (ClassNotFoundException | SQLException | HeadlessException e)
+                {
+                  System.err.println("Got an exception! ");
+                  System.err.println(e.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -457,8 +480,13 @@ public class Grupo_Alimenticio extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextField1.setEditable(true);
         jTextField2.setEditable(true);
+        jButton4.setVisible(true);
         editar = 1;
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1PopupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuCanceled
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1PopupMenuCanceled
 
     /**
      * @param args the command line arguments

@@ -28,6 +28,11 @@ public class Sucursales extends javax.swing.JFrame {
     public Sucursales() {
         initComponents();
         getDonantes();
+        jButton1.setVisible(false);
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
+        jButton5.setVisible(false);
+        jButton6.setVisible(false);
     }
     private void getDonantes() {
         Database db = new Database();
@@ -421,16 +426,36 @@ public class Sucursales extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-        int sucursales = Integer.parseInt(res.get(selectedindex).get(11));
-        if (sucursales == 0){
-            JOptionPane.showMessageDialog(null, "No puede tener sucursales.");
-            jPanel1.setVisible(false);
+            if (selectedindex != -1){
+            int sucursales = Integer.parseInt(res.get(selectedindex).get(11));
+            if (sucursales == 0){
+                JOptionPane.showMessageDialog(null, "No puede tener sucursales.");
+                jPanel1.setVisible(false);
+                jButton1.setVisible(false);
+                jButton2.setVisible(false);
+                jButton3.setVisible(false);
+                jButton5.setVisible(false);
+                jButton6.setVisible(false);
+            } else {
+                jPanel1.setVisible(true);
+                getSucursales();
+                jComboBox2.setSelectedIndex(-1);
+                jButton3.setVisible(true);
+                jButton6.setVisible(true);
+                jTextField1.setEnabled(false);
+                jTextField2.setEnabled(false);
+                jTextField3.setEnabled(false);
+                jTextField4.setEnabled(false);
+                jTextField5.setEnabled(false);
+                jTextField6.setEnabled(false);
+                jTextField7.setEnabled(false);
+                jTextField8.setEnabled(false);
+                jTextField9.setEnabled(false);
+                jTextField10.setEnabled(false);
+                editar = 0;
+            }
             
-        } else {
-            jPanel1.setVisible(true);
         }
-        getSucursales();
-        jComboBox2.setSelectedIndex(-1);
         
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
@@ -440,76 +465,82 @@ public class Sucursales extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int selectedindex = jComboBox1.getSelectedIndex();
-        if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
-            Connection con=null;
-            PreparedStatement s;
-            String url="jdbc:mysql://localhost:3306/Banco";
-            String dbDriver = "com.mysql.jdbc.Driver";
-            String user="root";
-            String pass="";
-            try{
-                    Class.forName(dbDriver);
-                    con=(Connection) DriverManager.getConnection(url,user,pass);
-                    s=con.prepareStatement("insert into Sucursales values(?,?,?,?,?,?,?,?,?,?,?)");
-                    s.setString(1,jTextField1.getText());
-                    s.setString(2,jTextField10.getText());
-                    s.setString(3,jComboBox1.getSelectedItem().toString());
-                    s.setString(4,jTextField2.getText());
-                    s.setString(5,jTextField3.getText());
-                    s.setString(6,jTextField4.getText());
-                    s.setString(7,jTextField5.getText());
-                    s.setString(8,jTextField6.getText());
-                    s.setString(9,jTextField8.getText());
-                    s.setString(10,jTextField7.getText());
-                    s.setString(11,jTextField9.getText());
+        if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText()) && !"".equals(jTextField3.getText())
+                && !"".equals(jTextField4.getText()) && !"".equals(jTextField5.getText()) && !"".equals(jTextField6.getText())
+                && !"".equals(jTextField7.getText()) && !"".equals(jTextField9.getText())
+                && !"".equals(jTextField10.getText())){
+            if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
+                Connection con=null;
+                PreparedStatement s;
+                String url="jdbc:mysql://localhost:3306/Banco";
+                String dbDriver = "com.mysql.jdbc.Driver";
+                String user="root";
+                String pass="";
+                try{
+                        Class.forName(dbDriver);
+                        con=(Connection) DriverManager.getConnection(url,user,pass);
+                        s=con.prepareStatement("insert into Sucursales values(?,?,?,?,?,?,?,?,?,?,?)");
+                        s.setString(1,jTextField1.getText());
+                        s.setString(2,jTextField10.getText());
+                        s.setString(3,jComboBox1.getSelectedItem().toString());
+                        s.setString(4,jTextField2.getText());
+                        s.setString(5,jTextField3.getText());
+                        s.setString(6,jTextField4.getText());
+                        s.setString(7,jTextField5.getText());
+                        s.setString(8,jTextField6.getText());
+                        s.setString(9,jTextField8.getText());
+                        s.setString(10,jTextField7.getText());
+                        s.setString(11,jTextField9.getText());
 
 
-                    s.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Guardado.");
-                    editar = 0;
-                    this.dispose();
-            }
-            catch (SQLException | ClassNotFoundException e) {
-                System.out.println(e);
-                  }
-        } else if (editar == 1){
-            try
-            {
-              // create the mysql database connection
-              String myDriver = "com.mysql.jdbc.Driver";
-              String myUrl = "jdbc:mysql://localhost:3306/Banco";
-              Class.forName(myDriver);
-                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                    String query = "update Sucursales set idSucursales = ? , Sucursal = ? , idDonante = ? , Direccion = ? , Colonia = ? , Ciudad = ? , Estado = ? , Telefono = ? , Fax = ? , Contacto = ? , Mail = ? where idSucursales = ?";
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString(1,jTextField1.getText());
-                    preparedStmt.setString(2,jTextField10.getText());
-                    preparedStmt.setString(3,jComboBox1.getSelectedItem().toString());
-                    preparedStmt.setString(4,jTextField2.getText());
-                    preparedStmt.setString(5,jTextField3.getText());
-                    preparedStmt.setString(6,jTextField4.getText());
-                    preparedStmt.setString(7,jTextField5.getText());
-                    preparedStmt.setString(8,jTextField6.getText());
-                    preparedStmt.setString(9,jTextField8.getText());
-                    preparedStmt.setString(10,jTextField7.getText());
-                    preparedStmt.setString(11,jTextField9.getText());
-                    preparedStmt.setString(12,jTextField1.getText());
-                    
-                    // execute the preparedstatement
-                    preparedStmt.execute();
+                        s.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Guardado.");
+                        editar = 0;
+                        this.dispose();
                 }
-              JOptionPane.showMessageDialog(null, "Editado.");
-              editar = 0;
-              this.dispose();
+                catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                      }
+            } else if (editar == 1){
+                try
+                {
+                  // create the mysql database connection
+                  String myDriver = "com.mysql.jdbc.Driver";
+                  String myUrl = "jdbc:mysql://localhost:3306/Banco";
+                  Class.forName(myDriver);
+                    try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                        String query = "update Sucursales set idSucursales = ? , Sucursal = ? , idDonante = ? , Direccion = ? , Colonia = ? , Ciudad = ? , Estado = ? , Telefono = ? , Fax = ? , Contacto = ? , Mail = ? where idSucursales = ?";
+                        PreparedStatement preparedStmt = conn.prepareStatement(query);
+                        preparedStmt.setString(1,jTextField1.getText());
+                        preparedStmt.setString(2,jTextField10.getText());
+                        preparedStmt.setString(3,jComboBox1.getSelectedItem().toString());
+                        preparedStmt.setString(4,jTextField2.getText());
+                        preparedStmt.setString(5,jTextField3.getText());
+                        preparedStmt.setString(6,jTextField4.getText());
+                        preparedStmt.setString(7,jTextField5.getText());
+                        preparedStmt.setString(8,jTextField6.getText());
+                        preparedStmt.setString(9,jTextField8.getText());
+                        preparedStmt.setString(10,jTextField7.getText());
+                        preparedStmt.setString(11,jTextField9.getText());
+                        preparedStmt.setString(12,jTextField1.getText());
 
+                        // execute the preparedstatement
+                        preparedStmt.execute();
+                    }
+                  JOptionPane.showMessageDialog(null, "Editado.");
+                  editar = 0;
+                  this.dispose();
+
+                }
+                catch (ClassNotFoundException | SQLException | HeadlessException e)
+                {
+                  System.err.println("Got an exception! ");
+                  System.err.println(e.getMessage());
+                }
             }
-            catch (ClassNotFoundException | SQLException | HeadlessException e)
-            {
-              System.err.println("Got an exception! ");
-              System.err.println(e.getMessage());
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -525,84 +556,91 @@ public class Sucursales extends javax.swing.JFrame {
         jTextField9.setText("");
         jTextField10.setText("");
 
+        jTextField1.setEnabled(true);
+        jTextField2.setEnabled(true);
+        jTextField3.setEnabled(true);
+        jTextField4.setEnabled(true);
+        jTextField5.setEnabled(true);
+        jTextField6.setEnabled(true);
+        jTextField7.setEnabled(true);
+        jTextField8.setEnabled(true);
+        jTextField9.setEnabled(true);
+        jTextField10.setEnabled(true);
         
-        jTextField1.setEditable(true);
-        jTextField2.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        jTextField5.setEditable(true);
-        jTextField6.setEditable(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEditable(true);
-        jTextField9.setEditable(true);
-        jTextField10.setEditable(true);
-
+        jButton1.setVisible(false);
+        jButton5.setVisible(false);
+        jButton2.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        jTextField1.setEditable(true);
-        jTextField2.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        jTextField5.setEditable(true);
-        jTextField6.setEditable(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEditable(true);
-        jTextField9.setEditable(true);
-        jTextField10.setEditable(true);
+        jTextField1.setEnabled(true);
+        jTextField2.setEnabled(true);
+        jTextField3.setEnabled(true);
+        jTextField4.setEnabled(true);
+        jTextField5.setEnabled(true);
+        jTextField6.setEnabled(true);
+        jTextField7.setEnabled(true);
+        jTextField8.setEnabled(true);
+        jTextField9.setEnabled(true);
+        jTextField10.setEnabled(true);
         editar = 1;
+        jButton2.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try
-        {
-          // create the mysql database connection
-          String myDriver = "com.mysql.jdbc.Driver";
-          String myUrl = "jdbc:mysql://localhost:3306/Banco";
-          Class.forName(myDriver);
-          int selectedindex;
-            try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                selectedindex = jComboBox2.getSelectedIndex();
-                String idsucursal = res2.get(selectedindex).get(0);
-                String query = "delete from Sucursales where idSucursales = ?";
-                PreparedStatement preparedStmt = conn.prepareStatement(query);
-                preparedStmt.setString(1, idsucursal);
-                // execute the preparedstatement
-                preparedStmt.execute();
+        int selectedindex = jComboBox2.getSelectedIndex();
+        if (selectedindex != -1){
+            try
+            {
+              // create the mysql database connection
+              String myDriver = "com.mysql.jdbc.Driver";
+              String myUrl = "jdbc:mysql://localhost:3306/Banco";
+              Class.forName(myDriver);
+                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                    selectedindex = jComboBox2.getSelectedIndex();
+                    String idsucursal = res2.get(selectedindex).get(0);
+                    String query = "delete from Sucursales where idSucursales = ?";
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString(1, idsucursal);
+                    // execute the preparedstatement
+                    preparedStmt.execute();
+                }
+                JOptionPane.showMessageDialog(null, "Borrado.");
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField5.setText("");
+                jTextField6.setText("");
+                jTextField7.setText("");
+                jTextField8.setText("");
+                jTextField9.setText("");
+                jTextField10.setText("");
+
+                jTextField1.setEnabled(false);
+                jTextField2.setEnabled(false);
+                jTextField3.setEnabled(false);
+                jTextField4.setEnabled(false);
+                jTextField5.setEnabled(false);
+                jTextField6.setEnabled(false);
+                jTextField7.setEnabled(false);
+                jTextField8.setEnabled(false);
+                jTextField9.setEnabled(false);
+                jTextField10.setEnabled(false);
+
+                this.dispose();
+                editar = 0;
             }
-            JOptionPane.showMessageDialog(null, "Borrado.");
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
-            jTextField4.setText("");
-            jTextField5.setText("");
-            jTextField6.setText("");
-            jTextField7.setText("");
-            jTextField8.setText("");
-            jTextField9.setText("");
-            jTextField10.setText("");
-         
-            jTextField1.setEditable(false);
-            jTextField2.setEditable(false);
-            jTextField3.setEditable(false);
-            jTextField4.setEditable(false);
-            jTextField5.setEditable(false);
-            jTextField6.setEditable(false);
-            jTextField7.setEditable(false);
-            jTextField8.setEditable(false);
-            jTextField9.setEditable(false);
-            jTextField10.setEditable(false);
-         
-            this.dispose();
-            editar = 0;
-        }
-        catch (ClassNotFoundException | SQLException | HeadlessException e)
-        {
-          System.err.println("Got an exception! ");
-          System.err.println(e.getMessage());
+            catch (ClassNotFoundException | SQLException | HeadlessException e)
+            {
+              System.err.println("Got an exception! ");
+              System.err.println(e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una sucursal válida.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -619,16 +657,16 @@ public class Sucursales extends javax.swing.JFrame {
         jTextField9.setText("");
         jTextField10.setText("");
         
-        jTextField1.setEditable(false);
-        jTextField2.setEditable(false);
-        jTextField3.setEditable(false);
-        jTextField4.setEditable(false);
-        jTextField5.setEditable(false);
-        jTextField6.setEditable(false);
-        jTextField7.setEditable(false);
-        jTextField8.setEditable(false);
-        jTextField9.setEditable(false);
-        jTextField10.setEditable(false);
+        jTextField1.setEnabled(false);
+        jTextField2.setEnabled(false);
+        jTextField3.setEnabled(false);
+        jTextField4.setEnabled(false);
+        jTextField5.setEnabled(false);
+        jTextField6.setEnabled(false);
+        jTextField7.setEnabled(false);
+        jTextField8.setEnabled(false);
+        jTextField9.setEnabled(false);
+        jTextField10.setEnabled(false);
         
         editar = 0;
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -636,18 +674,32 @@ public class Sucursales extends javax.swing.JFrame {
     private void jComboBox2PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox2PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox2.getSelectedIndex();
-        
-        jTextField1.setText(res2.get(selectedindex).get(0));
-        jTextField2.setText(res2.get(selectedindex).get(3));
-        jTextField3.setText(res2.get(selectedindex).get(4));
-        jTextField4.setText(res2.get(selectedindex).get(5));
-        jTextField5.setText(res2.get(selectedindex).get(6));
-        jTextField6.setText(res2.get(selectedindex).get(7));
-        jTextField7.setText(res2.get(selectedindex).get(9));
-        jTextField8.setText(res2.get(selectedindex).get(8));
-        jTextField9.setText(res2.get(selectedindex).get(10));
-        jTextField10.setText(jComboBox2.getSelectedItem().toString());
-
+        if (selectedindex != -1){
+            jTextField1.setText(res2.get(selectedindex).get(0));
+            jTextField2.setText(res2.get(selectedindex).get(3));
+            jTextField3.setText(res2.get(selectedindex).get(4));
+            jTextField4.setText(res2.get(selectedindex).get(5));
+            jTextField5.setText(res2.get(selectedindex).get(6));
+            jTextField6.setText(res2.get(selectedindex).get(7));
+            jTextField7.setText(res2.get(selectedindex).get(9));
+            jTextField8.setText(res2.get(selectedindex).get(8));
+            jTextField9.setText(res2.get(selectedindex).get(10));
+            jTextField10.setText(jComboBox2.getSelectedItem().toString());
+            editar = 0;
+            jTextField1.setEnabled(false);
+            jTextField2.setEnabled(false);
+            jTextField3.setEnabled(false);
+            jTextField4.setEnabled(false);
+            jTextField5.setEnabled(false);
+            jTextField6.setEnabled(false);
+            jTextField7.setEnabled(false);
+            jTextField8.setEnabled(false);
+            jTextField9.setEnabled(false);
+            jTextField10.setEnabled(false);
+            jButton5.setVisible(true);
+            jButton1.setVisible(true);
+            jButton2.setVisible(false);
+        }
         
     }//GEN-LAST:event_jComboBox2PopupMenuWillBecomeInvisible
 

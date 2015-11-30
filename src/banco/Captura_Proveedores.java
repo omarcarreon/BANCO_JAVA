@@ -28,6 +28,9 @@ public class Captura_Proveedores extends javax.swing.JFrame {
     public Captura_Proveedores() {
         initComponents();
         getProveedores();
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
+        jButton4.setVisible(false);
     }
     
     private void getProveedores() {
@@ -159,6 +162,7 @@ public class Captura_Proveedores extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 0, 102));
         jButton3.setText("Borrar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -464,6 +468,9 @@ public class Captura_Proveedores extends javax.swing.JFrame {
         jTextField11.setEditable(true);
         jTextField12.setEditable(true);
         editar = 0;
+        jButton4.setVisible(true);
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -473,19 +480,37 @@ public class Captura_Proveedores extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-        
-        jTextField1.setText(res.get(selectedindex).get(0));
-        jTextField2.setText(jComboBox1.getSelectedItem().toString());
-        jTextField3.setText(res.get(selectedindex).get(2));
-        jTextField4.setText(res.get(selectedindex).get(4));
-        jTextField5.setText(res.get(selectedindex).get(3));
-        jTextField6.setText(res.get(selectedindex).get(5));
-        jTextField7.setText(res.get(selectedindex).get(6));
-        jTextField8.setText(res.get(selectedindex).get(9));
-        jTextField9.setText(res.get(selectedindex).get(7));
-        jTextField10.setText(res.get(selectedindex).get(8));
-        jTextField11.setText(res.get(selectedindex).get(10));
-        jTextField12.setText(res.get(selectedindex).get(11));
+        if (selectedindex != -1){
+            jTextField1.setText(res.get(selectedindex).get(0));
+            jTextField2.setText(jComboBox1.getSelectedItem().toString());
+            jTextField3.setText(res.get(selectedindex).get(2));
+            jTextField4.setText(res.get(selectedindex).get(4));
+            jTextField5.setText(res.get(selectedindex).get(3));
+            jTextField6.setText(res.get(selectedindex).get(5));
+            jTextField7.setText(res.get(selectedindex).get(6));
+            jTextField8.setText(res.get(selectedindex).get(9));
+            jTextField9.setText(res.get(selectedindex).get(7));
+            jTextField10.setText(res.get(selectedindex).get(8));
+            jTextField11.setText(res.get(selectedindex).get(10));
+            jTextField12.setText(res.get(selectedindex).get(11));
+            jButton2.setVisible(true);
+            jButton3.setVisible(true);
+            jButton4.setVisible(false);
+            editar=0;
+            jTextField1.setEditable(false);
+            jTextField2.setEditable(false);
+            jTextField3.setEditable(false);
+            jTextField4.setEditable(false);
+            jTextField5.setEditable(false);
+            jTextField6.setEditable(false);
+            jTextField7.setEditable(false);
+            jTextField8.setEditable(false);
+            jTextField9.setEditable(false);
+            jTextField10.setEditable(false);
+            jTextField11.setEditable(false);
+            jTextField12.setEditable(false);
+            
+        }
         
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
@@ -558,94 +583,114 @@ public class Captura_Proveedores extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        jTextField1.setEditable(true);
-        jTextField2.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        jTextField5.setEditable(true);
-        jTextField6.setEditable(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEditable(true);
-        jTextField9.setEditable(true);
-        jTextField10.setEditable(true);
-        jTextField11.setEditable(true);
-        jTextField12.setEditable(true);
-        editar = 1;
+        int selectedindex = jComboBox1.getSelectedIndex();
+        if (selectedindex != -1){
+       
+            jTextField1.setEditable(true);
+            jTextField2.setEditable(true);
+            jTextField3.setEditable(true);
+            jTextField4.setEditable(true);
+            jTextField5.setEditable(true);
+            jTextField6.setEditable(true);
+            jTextField7.setEditable(true);
+            jTextField8.setEditable(true);
+            jTextField9.setEditable(true);
+            jTextField10.setEditable(true);
+            jTextField11.setEditable(true);
+            jTextField12.setEditable(true);
+            editar = 1;
+            jButton4.setVisible(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
         if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
-            Connection con=null;
-            PreparedStatement s;
-            String url="jdbc:mysql://localhost:3306/Banco";
-            String dbDriver = "com.mysql.jdbc.Driver";
-            String user="root";
-            String pass="";
-            try{
-                    Class.forName(dbDriver);
-                    con=(Connection) DriverManager.getConnection(url,user,pass);
-                    s=con.prepareStatement("insert into Proveedores values(?,?,?,?,?,?,?,?,?,?,?,?)");
-                    s.setString(1,jTextField1.getText());
-                    s.setString(2,jTextField2.getText());
-                    s.setString(3,jTextField3.getText());
-                    s.setString(4,jTextField5.getText());
-                    s.setString(5,jTextField4.getText());
-                    s.setString(6,jTextField6.getText());
-                    s.setString(7,jTextField7.getText());
-                    s.setString(8,jTextField9.getText());
-                    s.setString(9,jTextField10.getText());
-                    s.setString(10,jTextField8.getText());
-                    s.setString(11,jTextField11.getText());
-                    s.setString(12,jTextField12.getText());
-                    
+            if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText()) 
+                && !"".equals(jTextField3.getText()) && !"".equals(jTextField4.getText()) && !"".equals(jTextField5.getText()) && !"".equals(jTextField6.getText())
+                && !"".equals(jTextField7.getText()) && !"".equals(jTextField8.getText()) && !"".equals(jTextField10.getText()) && !"".equals(jTextField11.getText()) 
+                && !"".equals(jTextField12.getText())){
+                
+                Connection con=null;
+                PreparedStatement s;
+                String url="jdbc:mysql://localhost:3306/Banco";
+                String dbDriver = "com.mysql.jdbc.Driver";
+                String user="root";
+                String pass="";
+                try{
+                        Class.forName(dbDriver);
+                        con=(Connection) DriverManager.getConnection(url,user,pass);
+                        s=con.prepareStatement("insert into Proveedores values(?,?,?,?,?,?,?,?,?,?,?,?)");
+                        s.setString(1,jTextField1.getText());
+                        s.setString(2,jTextField2.getText());
+                        s.setString(3,jTextField3.getText());
+                        s.setString(4,jTextField5.getText());
+                        s.setString(5,jTextField4.getText());
+                        s.setString(6,jTextField6.getText());
+                        s.setString(7,jTextField7.getText());
+                        s.setString(8,jTextField9.getText());
+                        s.setString(9,jTextField10.getText());
+                        s.setString(10,jTextField8.getText());
+                        s.setString(11,jTextField11.getText());
+                        s.setString(12,jTextField12.getText());
 
-                    s.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Guardado.");
-                    editar = 0;
-                    this.dispose();
-            }
-            catch (SQLException | ClassNotFoundException e) {
-                System.out.println(e);
-                  }
-        } else if (editar == 1){
-            try
-            {
-              // create the mysql database connection
-              String myDriver = "com.mysql.jdbc.Driver";
-              String myUrl = "jdbc:mysql://localhost:3306/Banco";
-              Class.forName(myDriver);
-                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                    String idproveedor = res.get(selectedindex).get(0);
-                    String query = "update Proveedores set idProveedor = ? , Proveedor = ? , Direccion = ? , Colonia = ? , Ciudad = ? , Estado = ? , Telefono = ? , Fax = ? , Contacto = ? , Rfc = ? , FechaAlta = ?, Mail = ? where idProveedor = ?";
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString(1,jTextField1.getText());
-                    preparedStmt.setString(2,jTextField2.getText());
-                    preparedStmt.setString(3,jTextField3.getText());
-                    preparedStmt.setString(4,jTextField5.getText());
-                    preparedStmt.setString(5,jTextField4.getText());
-                    preparedStmt.setString(6,jTextField6.getText());
-                    preparedStmt.setString(7,jTextField7.getText());
-                    preparedStmt.setString(8,jTextField9.getText());
-                    preparedStmt.setString(9,jTextField10.getText());
-                    preparedStmt.setString(10,jTextField8.getText());
-                    preparedStmt.setString(11,jTextField11.getText());
-                    preparedStmt.setString(12,jTextField12.getText());
-                    preparedStmt.setString(13,idproveedor);
-                    
-                    // execute the preparedstatement
-                    preparedStmt.execute();
+
+                        s.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Guardado.");
+                        editar = 0;
+                        this.dispose();
                 }
-              JOptionPane.showMessageDialog(null, "Editado.");
-              editar = 0;
-              this.dispose();
-
+                catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
             }
-            catch (ClassNotFoundException | SQLException | HeadlessException e)
-            {
-              System.err.println("Got an exception! ");
-              System.err.println(e.getMessage());
+        } else if (editar == 1){
+            if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText()) 
+                && !"".equals(jTextField3.getText()) && !"".equals(jTextField4.getText()) && !"".equals(jTextField5.getText()) && !"".equals(jTextField6.getText())
+                && !"".equals(jTextField7.getText()) && !"".equals(jTextField8.getText()) && !"".equals(jTextField10.getText()) && !"".equals(jTextField11.getText()) 
+                && !"".equals(jTextField12.getText())){
+                try
+                {
+                  // create the mysql database connection
+                  String myDriver = "com.mysql.jdbc.Driver";
+                  String myUrl = "jdbc:mysql://localhost:3306/Banco";
+                  Class.forName(myDriver);
+                    try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                        String idproveedor = res.get(selectedindex).get(0);
+                        String query = "update Proveedores set idProveedor = ? , Proveedor = ? , Direccion = ? , Colonia = ? , Ciudad = ? , Estado = ? , Telefono = ? , Fax = ? , Contacto = ? , Rfc = ? , FechaAlta = ?, Mail = ? where idProveedor = ?";
+                        PreparedStatement preparedStmt = conn.prepareStatement(query);
+                        preparedStmt.setString(1,jTextField1.getText());
+                        preparedStmt.setString(2,jTextField2.getText());
+                        preparedStmt.setString(3,jTextField3.getText());
+                        preparedStmt.setString(4,jTextField5.getText());
+                        preparedStmt.setString(5,jTextField4.getText());
+                        preparedStmt.setString(6,jTextField6.getText());
+                        preparedStmt.setString(7,jTextField7.getText());
+                        preparedStmt.setString(8,jTextField9.getText());
+                        preparedStmt.setString(9,jTextField10.getText());
+                        preparedStmt.setString(10,jTextField8.getText());
+                        preparedStmt.setString(11,jTextField11.getText());
+                        preparedStmt.setString(12,jTextField12.getText());
+                        preparedStmt.setString(13,idproveedor);
+
+                        // execute the preparedstatement
+                        preparedStmt.execute();
+                    }
+                  JOptionPane.showMessageDialog(null, "Editado.");
+                  editar = 0;
+                  this.dispose();
+
+                }
+                catch (ClassNotFoundException | SQLException | HeadlessException e)
+                {
+                  System.err.println("Got an exception! ");
+                  System.err.println(e.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed

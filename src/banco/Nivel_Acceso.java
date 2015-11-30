@@ -28,6 +28,9 @@ public class Nivel_Acceso extends javax.swing.JFrame {
     public Nivel_Acceso() {
         initComponents();
         getNivelesAcceso();
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
+        jButton5.setVisible(false);
     }
     
     private void getNivelesAcceso() {
@@ -81,6 +84,7 @@ public class Nivel_Acceso extends javax.swing.JFrame {
         jComboBox1.setSelectedIndex(-1);
         jTextField1.setEditable(false);
         jTextField2.setEditable(false);
+        
     }
 
     /**
@@ -281,57 +285,63 @@ public class Nivel_Acceso extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-        if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
-            Connection con=null;
-            PreparedStatement s;
-            String url="jdbc:mysql://localhost:3306/Banco";
-            String dbDriver = "com.mysql.jdbc.Driver";
-            String user="root";
-            String pass="";
-            try{
-                    Class.forName(dbDriver);
-                    con=(Connection) DriverManager.getConnection(url,user,pass);
-                    s=con.prepareStatement("insert into Nivel_Acceso values(?,?)");
-                    s.setString(1,jTextField1.getText());
-                    s.setString(2,jTextField2.getText());
-                    
+        if (!"".equals(jTextField1.getText()) && !"".equals(jTextField2.getText())){
+            if (editar==0 && jTextField1.isEditable() && jTextField2.isEditable()){
+                Connection con=null;
+                PreparedStatement s;
+                String url="jdbc:mysql://localhost:3306/Banco";
+                String dbDriver = "com.mysql.jdbc.Driver";
+                String user="root";
+                String pass="";
+                try{
+                        Class.forName(dbDriver);
+                        con=(Connection) DriverManager.getConnection(url,user,pass);
+                        s=con.prepareStatement("insert into Nivel_Acceso values(?,?)");
+                        s.setString(1,jTextField1.getText());
+                        s.setString(2,jTextField2.getText());
 
-                    s.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Guardado.");
-                    editar = 0;
-                    this.dispose();
-            }
-            catch (SQLException | ClassNotFoundException e) {
-                System.out.println(e);
-                  }
-        } else if (editar == 1){
-            try
-            {
-              // create the mysql database connection
-              String myDriver = "com.mysql.jdbc.Driver";
-              String myUrl = "jdbc:mysql://localhost:3306/Banco";
-              Class.forName(myDriver);
-                try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
-                    String idnivel = res.get(selectedindex).get(0);
-                    String query = "update Nivel_Acceso set idNivel = ? , Nivel = ? where idNivel = ?";
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString(1, jTextField1.getText());
-                    preparedStmt.setString(2, jTextField2.getText());
-                    preparedStmt.setString(3, idnivel);
-                    
-                    // execute the preparedstatement
-                    preparedStmt.execute();
+
+                        s.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Guardado.");
+                        editar = 0;
+                        this.dispose();
                 }
-              JOptionPane.showMessageDialog(null, "Editado.");
-              editar = 0;
-              this.dispose();
+                catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                      }
+            } else if (editar == 1){
+                try
+                {
+                  // create the mysql database connection
+                  String myDriver = "com.mysql.jdbc.Driver";
+                  String myUrl = "jdbc:mysql://localhost:3306/Banco";
+                  Class.forName(myDriver);
+                    try (Connection conn = DriverManager.getConnection(myUrl, "root", "")) {
+                        String idnivel = res.get(selectedindex).get(0);
+                        String query = "update Nivel_Acceso set idNivel = ? , Nivel = ? where idNivel = ?";
+                        PreparedStatement preparedStmt = conn.prepareStatement(query);
+                        preparedStmt.setString(1, jTextField1.getText());
+                        preparedStmt.setString(2, jTextField2.getText());
+                        preparedStmt.setString(3, idnivel);
 
+                        // execute the preparedstatement
+                        preparedStmt.execute();
+                    }
+                  JOptionPane.showMessageDialog(null, "Editado.");
+                  editar = 0;
+                  this.dispose();
+
+                }
+                catch (ClassNotFoundException | SQLException | HeadlessException e)
+                {
+                  System.err.println("Got an exception! ");
+                  System.err.println(e.getMessage());
+                }
             }
-            catch (ClassNotFoundException | SQLException | HeadlessException e)
-            {
-              System.err.println("Got an exception! ");
-              System.err.println(e.getMessage());
-            }
+        }
+        else 
+        {
+            JOptionPane.showMessageDialog(null, "Faltan campos por completar.");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -340,6 +350,7 @@ public class Nivel_Acceso extends javax.swing.JFrame {
         jTextField1.setEditable(true);
         jTextField2.setEditable(true);
         editar = 1;
+        jButton3.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -354,8 +365,16 @@ public class Nivel_Acceso extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-        jTextField1.setText(res.get(selectedindex).get(0));
-        jTextField2.setText(jComboBox1.getSelectedItem().toString());
+        if (selectedindex != -1){
+            jTextField1.setText(res.get(selectedindex).get(0));
+            jTextField2.setText(jComboBox1.getSelectedItem().toString());
+            jTextField1.setEditable(false);
+            jTextField2.setEditable(false);
+            editar = 0;
+            jButton2.setVisible(true);
+            jButton3.setVisible(false);
+            jButton5.setVisible(true);
+        }
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
     private void jComboBox1PopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeVisible
@@ -368,6 +387,10 @@ public class Nivel_Acceso extends javax.swing.JFrame {
         jTextField2.setText("");
         jTextField1.setEditable(true);
         jTextField2.setEditable(true);
+        
+        jButton2.setVisible(false);
+        jButton5.setVisible(false);
+        jButton3.setVisible(true);
         editar = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
