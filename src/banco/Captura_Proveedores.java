@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author omarcarreon
+ *
  */
 public class Captura_Proveedores extends javax.swing.JFrame {
 

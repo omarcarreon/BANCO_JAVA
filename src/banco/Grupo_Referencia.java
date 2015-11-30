@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
- * @author diegoaleman
+ * 
  */
 public class Grupo_Referencia extends javax.swing.JFrame {
 

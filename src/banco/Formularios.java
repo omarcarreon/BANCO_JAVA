@@ -7,7 +7,7 @@ package banco;
 
 /**
  *
- * @author jorgelp94
+ * 
  */
 import java.awt.HeadlessException;
 import java.sql.*;

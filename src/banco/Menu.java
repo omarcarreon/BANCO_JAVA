@@ -7,7 +7,7 @@ package banco;
 
 /**
  *
- * @author omarcarreon
+ * 
  */
 public class Menu extends javax.swing.JFrame {
 

@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
- * @author diegoaleman
+ *
  */
 public class Sucursales extends javax.swing.JFrame {
 

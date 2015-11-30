@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author omarcarreon
+ * 
  */
 public class connect {
     Connection conn = null;

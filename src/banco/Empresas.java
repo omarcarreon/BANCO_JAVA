@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author angelgonzalez
+ * 
  */
 public class Empresas extends javax.swing.JFrame {
 

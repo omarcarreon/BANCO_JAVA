@@ -18,7 +18,7 @@ import javax.swing.table.*;
 
 /**
  *
- * @author diegoaleman
+ * 
  */
 public class AccesoUsuarios extends javax.swing.JFrame {
 

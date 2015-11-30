@@ -9,7 +9,7 @@ package banco;
 import java.sql.*;
 /**
  *
- * @author omarcarreon
+ * 
  */
 public class BANCO {
 

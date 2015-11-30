@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author angelgonzalez
+ * 
  */
 public final class TiposDeDonantes extends javax.swing.JFrame {
 

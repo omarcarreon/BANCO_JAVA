@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author jorgelp94
+ * 
  */
 public class Donantes extends javax.swing.JFrame {
 

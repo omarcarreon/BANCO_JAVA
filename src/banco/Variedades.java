@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
- * @author omarcarreon
+ * 
  */
 public class Variedades extends javax.swing.JFrame {
 

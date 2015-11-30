@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author omarcarreon
+ * 
  */
 public class Grupo_Alimenticio extends javax.swing.JFrame {
 
