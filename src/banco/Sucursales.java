@@ -86,6 +86,7 @@ public class Sucursales extends javax.swing.JFrame {
     }
     
     private void getSucursales() {
+        res2 = new ArrayList<>();
          try
             {
               // create the mysql database connection
@@ -426,8 +427,20 @@ public class Sucursales extends javax.swing.JFrame {
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int selectedindex = jComboBox1.getSelectedIndex();
-            if (selectedindex != -1){
+        if (selectedindex != -1){
+                
             int sucursales = Integer.parseInt(res.get(selectedindex).get(11));
+            jComboBox2.removeAllItems();
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField6.setText("");
+            jTextField7.setText("");
+            jTextField8.setText("");
+            jTextField9.setText("");
+            jTextField10.setText("");
             if (sucursales == 0){
                 JOptionPane.showMessageDialog(null, "No puede tener sucursales.");
                 jPanel1.setVisible(false);
